@@ -1,0 +1,10 @@
+include: package:very_good_analysis/analysis_options.yaml
+linter:
+    rules:
+        public_member_api_docs: false
+        close_sinks: true
+        one_member_abstracts: true
+        avoid_print: false
+analyzer:
+    exclude:
+        - lib/generated_plugin_registrant.dart
