@@ -70,3 +70,9 @@ Or if yu're using fvm
 dart format --fix -l 80 lib
 fvm flutter pub run import_sorter:main
 ```
+
+## Más información
+
+Federación de Identidades de la Universidad de Colima
+
+-   [Federación UCOL](https://portal.ucol.mx/federacion-identidades/) - Página oficial
