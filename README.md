@@ -5,14 +5,17 @@ Se proveen las screens necesarias para un login con el sistema SIMPLESAML de la 
 
 ## Contenido
 
-### WayfWebViewScreen
-
-Provee el widget que se conecta a la dederación, recive un callback que es llamado al recivir los datos de la federación
-
 ### WayfLoginButtonScreen
 
 Provee de una pantalla antes de **WayfWebViewScreen** con el logo de la universidad y un botón que abre la pagina de la federación
 
+<img src="screenshots/login_button.jpg" alt="Redirect to samsample" width="250px"/>
+
+### WayfWebViewScreen
+
+Provee el widget que se conecta a la dederación, recive un callback que es llamado al recivir los datos de la federación
+
+<img src="screenshots/samsample.jpg" alt="SamSample webview" width="250px"/>
 ## Uso
 
 ### Plantilla
