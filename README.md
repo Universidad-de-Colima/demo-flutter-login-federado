@@ -1,6 +1,6 @@
 # wayf_login_udc
 
-Apllicación plantilla y package para la autenticación federada para la universidad de colima
+Apllicación que funciona como plantilla y package para la autenticación federada para la universidad de colima
 
 ## For developers
 
