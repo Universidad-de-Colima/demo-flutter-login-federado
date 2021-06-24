@@ -9,12 +9,17 @@ environment:
 dependencies:
     flutter:
         sdk: flutter
-    very_good_analysis: ^2.1.2
     webview_flutter: ^2.0.8
 dev_dependencies:
     flutter_test:
         sdk: flutter
     import_sorter: ^4.6.0
+    very_good_analysis: ^2.1.2
+    flutter_launcher_icons: ^0.9.0
+flutter_icons:
+    ios: false
+    android: true
+    image_path: "assets/launcher_icons/default-icon.png"
 import_sorter:
     emojis: true
 flutter:
