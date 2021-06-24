@@ -20,7 +20,7 @@ Provee el widget que se conecta a la dederación, recive un callback que es llam
 
 ### Plantilla
 
-Puedes usar este repositorio desde github o accediendo a este [link](https://github.com/ulises214/wayf_login_udc/generate)
+Puedes usar este repositorio desde github o accediendo a este [link](https://github.com/Universidad-de-Colima/demo-flutter-login-federado/generate)
 
 Este repositorio es una aplicación completa que puedes correr ejecutando
 
@@ -37,7 +37,7 @@ En tu pubspec.yaml agrega la siguiente dependencia
 ```yaml
 wayf_login_udc:
     git:
-        url: https://github.com/ulises214/wayf_login_udc.git
+        url: https://github.com/Universidad-de-Colima/demo-flutter-login-federado.git
         ref: main
 ```
 
