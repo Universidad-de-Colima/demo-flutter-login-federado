@@ -1,7 +1,10 @@
 part of screens;
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key, required this.onWayfResolve}) : super(key: key);
+class WayfLoginButtonScreen extends StatelessWidget {
+  const WayfLoginButtonScreen({
+    Key? key,
+    required this.onWayfResolve,
+  }) : super(key: key);
   final OnWayfResolve onWayfResolve;
   @override
   Widget build(BuildContext context) {
