@@ -17,4 +17,4 @@ import 'package:wayf_login_udc/view/widgets/widgets_library.dart';
 
 part 'main_screen.dart';
 part 'wayf_webview_screen.dart';
-part 'white_secondary_screen.dart';
+part 'login_result_screen.dart';

@@ -16,6 +16,13 @@ Provee de una pantalla antes de **WayfWebViewScreen** con el logo de la universi
 Provee el widget que se conecta a la dederación, recive un callback que es llamado al recivir los datos de la federación
 
 <img src="screenshots/samsample.jpg" alt="SamSample webview" width="250px"/>
+
+### LoginResultScreen
+
+Una pantalla provicional para mostrar la información obtenida en el login
+
+<img src="screenshots/login_success.jpg" alt="screenshots/login_succes.jpg" width="250px"/>
+
 ## Uso
 
 ### Plantilla

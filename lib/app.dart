@@ -26,7 +26,7 @@ class WayfLoginUDCApp extends StatelessWidget {
   void _onWayfResolve(WayfLoginModel wayfData, BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => WhiteSecondaryScreen(data: wayfData),
+        builder: (context) => LoginResultScreen(data: wayfData),
       ),
     );
   }
