@@ -1,6 +1,12 @@
 part of models;
 
+/// La información que es devuelta por la federación es tipada en esta clase
+///
+/// Cada campo es una lista de String pero son listas de un solo elemento
+/// Las listas siempre tendrán un campo que puede ser una cadena vacía cuando no
+/// hay datos
 class WayfLoginModel {
+  /// Crea los datos tipados cuando el login ha sido exitoso
   WayfLoginModel({
     required this.uCorreo,
     required this.uNombre,

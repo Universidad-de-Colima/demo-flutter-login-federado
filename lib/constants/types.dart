@@ -1,3 +1,3 @@
 part of constants;
 
-typedef OnWayfResolve = Function(WayfLoginModel);
+typedef OnWayfResolve = void Function(WayfLoginModel);

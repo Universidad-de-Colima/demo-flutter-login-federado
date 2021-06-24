@@ -1,6 +1,12 @@
 part of screens;
 
+/// Una pantalla para loguearse con la federación mediante un webview
 class WayfWebViewScreen extends StatefulWidget {
+  /// Crea un webview que sirve para hacer login con la federación y llama a
+  /// [onWayfResolve] cuando el resultado es devuelto
+  ///
+  /// Este widget puede usarse en conjunto con [WayfLoginButtonScreen] para
+  /// tener una mejor presentación inicial, pero es posible usar solo el webview
   const WayfWebViewScreen({
     Key? key,
     required this.onWayfResolve,
@@ -39,12 +45,9 @@ class _WayfWebViewScreenState extends State<WayfWebViewScreen> {
     return JavascriptChannel(
       name: 'Login',
       onMessageReceived: (jsMessage) {
-        print('pitooooo');
-        final wayfData = WayfLoginModel.fromJson(
-          json.decode(jsMessage.message),
-        );
+        final wayfData =
+            WayfLoginModel.fromJson(json.decode(jsMessage.message));
         widget.onWayfResolve(wayfData);
-        print(wayfData.displayName.first);
       },
     );
   }

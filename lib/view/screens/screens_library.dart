@@ -11,3 +11,4 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 part 'main_screen.dart';
 part 'wayf_webview_screen.dart';
+part 'white_secondary_screen.dart';

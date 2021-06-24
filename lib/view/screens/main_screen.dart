@@ -1,6 +1,13 @@
 part of screens;
 
+/// Una pantalla que muestra un botón para abrir un webview y comenazar el
+/// proceso de login con la federación
 class WayfLoginButtonScreen extends StatelessWidget {
+  /// Crea una pantalla intermediaría entre una vista cualquiera y el webview
+  ///
+  /// Esta pantalla es solamente visual y puede ser omitida
+  /// El callback [onWayfResolve] es pasado directamente a la pantalla del web
+  /// view
   const WayfLoginButtonScreen({
     Key? key,
     required this.onWayfResolve,
