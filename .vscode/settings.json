@@ -7,5 +7,6 @@
         "editor.suggestSelection": "first",
         "editor.tabCompletion": "onlySnippets",
         "editor.wordBasedSuggestions": false
-    }
+    },
+    "cSpell.words": ["Wayf"]
 }

@@ -1,6 +1,6 @@
 part of screens;
 
-/// Una pantalla para loguearse con la federación mediante un webview
+/// Una pantalla para hacer login con la federación mediante un webview
 class WayfWebViewScreen extends StatefulWidget {
   /// Crea un webview que sirve para hacer login con la federación y llama a
   /// [onWayfResolve] cuando el resultado es devuelto
