@@ -1,6 +1,6 @@
 part of screens;
 
-/// Una pantalla que muestra un botón para abrir un webview y comenazar el
+/// Una pantalla que muestra un botón para abrir un webview y comenzar el
 /// proceso de login con la federación
 class WayfLoginButtonScreen extends StatelessWidget {
   /// Crea una pantalla intermediaría entre una vista cualquiera y el webview

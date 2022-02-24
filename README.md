@@ -1,6 +1,6 @@
 # wayf_login_udc
 
-Apllicación que funciona como plantilla y package para la autenticación federada para la universidad de colima
+Aplicación que funciona como plantilla y package para la autenticación federada para la universidad de colima
 Se proveen las screens necesarias para un login con el sistema SIMPLESAML de la universidad de colima
 
 ## Contenido
@@ -13,13 +13,13 @@ Provee de una pantalla antes de **WayfWebViewScreen** con el logo de la universi
 
 ### WayfWebViewScreen
 
-Provee el widget que se conecta a la dederación, recive un callback que es llamado al recivir los datos de la federación
+Provee el widget que se conecta a la federación, recibe un callback que es llamado al recibir los datos de la federación
 
 <img src="screenshots/samsample.jpg" alt="SamSample webview" width="250px"/>
 
 ### LoginResultScreen
 
-Una pantalla provicional para mostrar la información obtenida en el login
+Una pantalla provisional para mostrar la información obtenida en el login
 
 <img src="screenshots/login_success.jpg" alt="screenshots/login_succes.jpg" width="250px"/>
 
@@ -64,7 +64,7 @@ dart format --fix -l 80 lib
 flutter pub run import_sorter:main
 ```
 
-Or if yu're using fvm
+Or if you're using fvm
 
 ```bash
 dart format --fix -l 80 lib
