@@ -7,6 +7,8 @@ class LoginResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromRGBO(0x00, 0x6b, 0x3f, 1),
+        foregroundColor: Colors.white,
         title: const Text('Login correcto'),
       ),
       body: SingleChildScrollView(
@@ -15,8 +17,13 @@ class LoginResultScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _DataItem('Nombre', data.displayName.first),
-            _DataItem('No. Cuenta', data.uCuenta.first),
+            _DataItem('Tipo', data.uTipo.first),
+            if (data.uTipo.first == 'Estudiante')
+              _DataItem('No. Cuenta', data.uCuenta.first),
+            if (data.uTipo.first != 'Estudiante')
+              _DataItem('No. Trabajador', data.uTrabajador.first),
             _DataItem('Correo', data.uCorreo.first),
+            _DataItem('Dependencia', data.uDependencia.first),
           ],
         ),
       ),
