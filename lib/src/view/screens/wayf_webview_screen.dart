@@ -33,7 +33,6 @@ class _WayfWebViewScreenState extends State<WayfWebViewScreen> {
       body: WebView(
         initialUrl: loginWebViewUrl,
         javascriptMode: JavascriptMode.unrestricted,
-        gestureNavigationEnabled: false,
         javascriptChannels: {
           _createChannel(),
         },
@@ -45,8 +44,9 @@ class _WayfWebViewScreenState extends State<WayfWebViewScreen> {
     return JavascriptChannel(
       name: 'Login',
       onMessageReceived: (jsMessage) {
-        final wayfData =
-            WayfLoginModel.fromJson(json.decode(jsMessage.message));
+        final wayfData = WayfLoginModel.fromJson(
+          json.decode(jsMessage.message) as Map<String, dynamic>,
+        );
         widget.onWayfResolve(wayfData);
       },
     );

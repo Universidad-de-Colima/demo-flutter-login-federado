@@ -7,15 +7,11 @@ class UdcLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(
-        maxHeight: 200,
-        minHeight: 80,
-        maxWidth: 200,
-        minWidth: 80,
-      ),
-      child: Image.asset(
-        udcLogoPath,
+    return const Center(
+      child: Image(
+        image: NetworkImage(
+          'https://portal.ucol.mx/content/micrositios/188/image/Escudo2021/1_Linea/UdeC%20Abajo_Negro_80_.png',
+        ),
         semanticLabel: 'Logo Universidad de Colima',
       ),
     );

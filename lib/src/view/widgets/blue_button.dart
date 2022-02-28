@@ -14,9 +14,9 @@ class BlueButton extends StatelessWidget {
       constraints: BoxConstraints(maxWidth: maxWith),
       child: MaterialButton(
         minWidth: double.infinity,
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         elevation: 4,
-        highlightElevation: 2.0,
+        highlightElevation: 2,
         onPressed: onPressed,
         color: UdcColors.blue,
         child: Text(
