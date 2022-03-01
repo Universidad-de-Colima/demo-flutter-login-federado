@@ -4,7 +4,7 @@ library constants;
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:wayf_login_udc/models/models_library.dart';
+import 'package:wayf_login_udc/src/models/models_library.dart';
 
 part 'colors.dart';
 part 'assets.dart';

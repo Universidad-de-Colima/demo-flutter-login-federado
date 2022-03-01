@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:wayf_login_udc/models/models_library.dart';
-import 'package:wayf_login_udc/view/screens/screens_library.dart';
+import 'package:wayf_login_udc/src/models/models_library.dart';
+import 'package:wayf_login_udc/src/view/screens/screens_library.dart';
 
 /// Esta es una aplicación de prueba, puede usarse posteriormente como plantilla
 class WayfLoginUDCApp extends StatelessWidget {
@@ -24,7 +24,7 @@ class WayfLoginUDCApp extends StatelessWidget {
   }
 
   void _onWayfResolve(WayfLoginModel wayfData, BuildContext context) {
-    Navigator.of(context).push(
+    Navigator.of(context).push<void>(
       MaterialPageRoute(
         builder: (context) => LoginResultScreen(data: wayfData),
       ),

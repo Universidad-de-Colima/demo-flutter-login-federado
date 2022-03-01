@@ -24,27 +24,27 @@ class WayfLoginModel {
   factory WayfLoginModel.fromJson(Map<String, dynamic> json) {
     return WayfLoginModel(
       // ignore: avoid_dynamic_calls
-      uCorreo: json['uCorreo'].cast<String>(),
+      uCorreo: json['uCorreo'].cast<String>() as List<String>,
       // ignore: avoid_dynamic_calls
-      uNombre: json['uNombre'].cast<String>(),
+      uNombre: json['uNombre'].cast<String>() as List<String>,
       // ignore: avoid_dynamic_calls
-      uDependencia: json['uDependencia'].cast<String>(),
+      uDependencia: json['uDependencia'].cast<String>() as List<String>,
       // ignore: avoid_dynamic_calls
-      uCuenta: json['uCuenta'].cast<String>(),
+      uCuenta: json['uCuenta'].cast<String>() as List<String>,
       // ignore: avoid_dynamic_calls
-      uTrabajador: json['uTrabajador'].cast<String>(),
+      uTrabajador: json['uTrabajador'].cast<String>() as List<String>,
       // ignore: avoid_dynamic_calls
-      uTipo: json['uTipo'].cast<String>(),
+      uTipo: json['uTipo'].cast<String>() as List<String>,
       // ignore: avoid_dynamic_calls
-      cn: json['cn'].cast<String>(),
+      cn: json['cn'].cast<String>() as List<String>,
       // ignore: avoid_dynamic_calls
-      sn: json['sn'].cast<String>(),
+      sn: json['sn'].cast<String>() as List<String>,
       // ignore: avoid_dynamic_calls
-      displayName: json['displayName'].cast<String>(),
+      displayName: json['displayName'].cast<String>() as List<String>,
       // ignore: avoid_dynamic_calls
-      immutableID: json['ImmutableID'].cast<String>(),
+      immutableID: json['ImmutableID'].cast<String>() as List<String>,
       // ignore: avoid_dynamic_calls
-      givenName: json['givenName'].cast<String>(),
+      givenName: json['givenName'].cast<String>() as List<String>,
     );
   }
   List<String> uCorreo;

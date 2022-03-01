@@ -30,7 +30,7 @@ class WayfLoginButtonScreen extends StatelessWidget {
   }
 
   void _toLogin(BuildContext context) {
-    Navigator.push(
+    Navigator.push<void>(
       context,
       MaterialPageRoute(
         builder: (context) {

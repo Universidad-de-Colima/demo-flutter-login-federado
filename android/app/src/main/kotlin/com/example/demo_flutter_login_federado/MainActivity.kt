@@ -1,4 +1,4 @@
-package com.example.wayf_login_udc
+package com.example.demo_flutter_login_federado
 
 import io.flutter.embedding.android.FlutterActivity
 
