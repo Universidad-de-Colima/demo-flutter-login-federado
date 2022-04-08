@@ -28,7 +28,10 @@ class _WayfWebViewScreenState extends State<WayfWebViewScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: UdcColors.green,
-        title: const Text('Inicio de sesión'),
+        foregroundColor: Colors.white,
+        title: const Text(
+          'Inicio de sesión',
+        ),
       ),
       body: WebView(
         initialUrl: loginWebViewUrl,
