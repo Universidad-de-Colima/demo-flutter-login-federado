@@ -7,9 +7,16 @@ class LoginResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromRGBO(0x00, 0x6b, 0x3f, 1),
+        backgroundColor: UdcColors.green,
         foregroundColor: Colors.white,
         title: const Text('Login correcto'),
+        actions: [
+          WayfLogoutButton(
+            onWayfResolve: () {
+              Navigator.of(context).pushReplacementNamed('/home');
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
