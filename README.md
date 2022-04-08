@@ -25,6 +25,14 @@ Una pantalla provisional para mostrar la información obtenida en el login
 
 ## Uso
 
+Aumenta la minSdkVersion a la 19
+
+```gradle
+defaultConfig {
+    minSdkVersion 19
+}
+```
+
 ### Plantilla
 
 Puedes usar este repositorio desde github o accediendo a este [link](https://github.com/Universidad-de-Colima/demo-flutter-login-federado/generate)
