@@ -2,10 +2,10 @@ part of widgets;
 
 class BlueButton extends StatelessWidget {
   const BlueButton({
-    Key? key,
+    super.key,
     this.onPressed,
     this.maxWith = 300.0,
-  }) : super(key: key);
+  });
   final VoidCallback? onPressed;
   final double maxWith;
   @override
@@ -23,7 +23,7 @@ class BlueButton extends StatelessWidget {
           'Iniciar sesión',
           style: Theme.of(context)
               .textTheme
-              .headline5!
+              .headlineSmall!
               .copyWith(color: Colors.white),
         ),
       ),

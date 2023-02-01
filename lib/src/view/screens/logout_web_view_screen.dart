@@ -5,9 +5,9 @@ class WayfWebViewLogoutScreen extends StatefulWidget {
   /// Crea un webview para hacer login con la federación y llama a
   /// [onWayfResolve] cuando el logout se ha completado
   const WayfWebViewLogoutScreen({
-    Key? key,
+    super.key,
     required this.onWayfResolve,
-  }) : super(key: key);
+  });
 
   /// Función llamada cuando el logout se ha completado
   final VoidCallback onWayfResolve;
@@ -17,10 +17,21 @@ class WayfWebViewLogoutScreen extends StatefulWidget {
 }
 
 class _WayfWebViewLogoutScreenState extends State<WayfWebViewLogoutScreen> {
+  late final WebViewController _controller;
+
   @override
   void initState() {
     super.initState();
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(Colors.white70)
+      ..loadRequest(Uri.parse(logoutWebViewUrl))
+      ..addJavaScriptChannel(
+        'Logout',
+        onMessageReceived: (_) {
+          widget.onWayfResolve();
+        },
+      );
   }
 
   @override
@@ -31,22 +42,9 @@ class _WayfWebViewLogoutScreenState extends State<WayfWebViewLogoutScreen> {
         foregroundColor: Colors.white,
         title: const Text('Cerrar sesión'),
       ),
-      body: WebView(
-        initialUrl: logoutWebViewUrl,
-        javascriptMode: JavascriptMode.unrestricted,
-        javascriptChannels: {
-          _createChannel(),
-        },
+      body: WebViewWidget(
+        controller: _controller,
       ),
-    );
-  }
-
-  JavascriptChannel _createChannel() {
-    return JavascriptChannel(
-      name: 'Logout',
-      onMessageReceived: (_) {
-        widget.onWayfResolve();
-      },
     );
   }
 }

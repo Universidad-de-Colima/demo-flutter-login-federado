@@ -8,19 +8,24 @@ class WayfWebViewScreen extends StatefulWidget {
   /// Este widget puede usarse en conjunto con [WayfLoginButtonScreen] para
   /// tener una mejor presentación inicial, pero es posible usar solo el webview
   const WayfWebViewScreen({
-    Key? key,
+    super.key,
     required this.onWayfResolve,
-  }) : super(key: key);
+  });
   final OnWayfResolve onWayfResolve;
   @override
   _WayfWebViewScreenState createState() => _WayfWebViewScreenState();
 }
 
 class _WayfWebViewScreenState extends State<WayfWebViewScreen> {
+  late final WebViewController _controller;
   @override
   void initState() {
     super.initState();
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(Colors.white70)
+      ..loadRequest(Uri.parse(loginWebViewUrl))
+      ..addJavaScriptChannel('Login', onMessageReceived: onMessageReceived);
   }
 
   @override
@@ -33,25 +38,16 @@ class _WayfWebViewScreenState extends State<WayfWebViewScreen> {
           'Inicio de sesión',
         ),
       ),
-      body: WebView(
-        initialUrl: loginWebViewUrl,
-        javascriptMode: JavascriptMode.unrestricted,
-        javascriptChannels: {
-          _createChannel(),
-        },
+      body: WebViewWidget(
+        controller: _controller,
       ),
     );
   }
 
-  JavascriptChannel _createChannel() {
-    return JavascriptChannel(
-      name: 'Login',
-      onMessageReceived: (jsMessage) {
-        final wayfData = WayfLoginModel.fromJson(
-          json.decode(jsMessage.message) as Map<String, dynamic>,
-        );
-        widget.onWayfResolve(wayfData);
-      },
+  void onMessageReceived(JavaScriptMessage jsMessage) {
+    final wayfData = WayfLoginModel.fromJson(
+      json.decode(jsMessage.message) as Map<String, dynamic>,
     );
+    widget.onWayfResolve(wayfData);
   }
 }

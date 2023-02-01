@@ -7,7 +7,8 @@ import 'package:wayf_login_udc/src/view/screens/screens_library.dart';
 
 /// Esta es una aplicación de prueba, puede usarse posteriormente como plantilla
 class WayfLoginUDCApp extends StatelessWidget {
-  const WayfLoginUDCApp({Key? key}) : super(key: key);
+  /// Crea una aplicación de prueba
+  const WayfLoginUDCApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

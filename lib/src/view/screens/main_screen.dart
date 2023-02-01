@@ -9,9 +9,9 @@ class WayfLoginButtonScreen extends StatelessWidget {
   /// El callback [onWayfResolve] es pasado directamente a la pantalla del web
   /// view
   const WayfLoginButtonScreen({
-    Key? key,
+    super.key,
     required this.onWayfResolve,
-  }) : super(key: key);
+  });
   final OnWayfResolve onWayfResolve;
   @override
   Widget build(BuildContext context) {

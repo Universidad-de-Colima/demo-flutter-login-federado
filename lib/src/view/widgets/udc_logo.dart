@@ -2,15 +2,23 @@ part of widgets;
 
 class UdcLogo extends StatelessWidget {
   const UdcLogo({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Image(
+    const expectedSize = 200.0;
+    final screenSize = 0.8 * MediaQuery.of(context).size.width;
+    final minSize = min(expectedSize, screenSize);
+    final maxSize = max(expectedSize, screenSize);
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minWidth: minSize,
+        maxWidth: maxSize,
+      ),
+      child: const Image(
         image: NetworkImage(
-          'https://portal.ucol.mx/content/micrositios/188/image/Escudo2021/1_Linea/UdeC%20Abajo_Negro_80_.png',
+          'https://recursos.ucol.mx/tesis/img/logo_negro.png',
         ),
         semanticLabel: 'Logo Universidad de Colima',
       ),

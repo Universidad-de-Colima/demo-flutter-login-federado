@@ -1,7 +1,11 @@
 part of screens;
 
+/// Una pantalla que muestra los datos del usuario
 class LoginResultScreen extends StatelessWidget {
-  const LoginResultScreen({Key? key, required this.data}) : super(key: key);
+  /// Crea una pantalla que muestra los datos del usuario
+  const LoginResultScreen({super.key, required this.data});
+
+  /// Los datos del usuario que se obtuvieron del webview
   final WayfLoginModel data;
   @override
   Widget build(BuildContext context) {
@@ -41,9 +45,8 @@ class LoginResultScreen extends StatelessWidget {
 class _DataItem extends StatelessWidget {
   const _DataItem(
     this.field,
-    this.value, {
-    Key? key,
-  }) : super(key: key);
+    this.value,
+  );
   final String field;
   final String value;
   @override
@@ -51,7 +54,7 @@ class _DataItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(field, style: Theme.of(context).textTheme.headline6),
+        Text(field, style: Theme.of(context).textTheme.titleLarge),
         Text(value),
       ],
     );

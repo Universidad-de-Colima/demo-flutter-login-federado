@@ -1,4 +1,7 @@
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
+
+// 🌎 Project imports:
 import 'package:wayf_login_udc/src/constants/constants_library.dart';
 import 'package:wayf_login_udc/src/view/screens/screens_library.dart';
 
@@ -11,8 +14,8 @@ class WayfLogoutButton extends StatelessWidget {
   /// cerrar una sesión en la federación
   const WayfLogoutButton({
     required this.onWayfResolve,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// Función llamada cuando el proceso ha terminado
   final VoidCallback onWayfResolve;
