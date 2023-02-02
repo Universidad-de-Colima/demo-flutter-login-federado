@@ -1,23 +1,25 @@
 part of screens;
 
+/// Una pantalla que muestra los datos del usuario
 class LoginResultScreen extends StatelessWidget {
-  const LoginResultScreen({Key? key, required this.data}) : super(key: key);
+  /// Crea una pantalla que muestra los datos del usuario
+  const LoginResultScreen({super.key, required this.data});
+
+  /// Los datos del usuario que se obtuvieron del webview
   final WayfLoginModel data;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: UdcColors.green,
-        foregroundColor: Colors.white,
-        title: const Text('Login correcto'),
-        actions: [
-          WayfLogoutButton(
-            onWayfResolve: () {
-              Navigator.of(context).pushReplacementNamed('/home');
-            },
-          ),
-        ],
-      ),
+    return SimpleScaffoldTemplate(
+      actions: [
+        WayfLogoutButton(
+          onWayfResolve: (context) {
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('/home', (route) => false);
+          },
+        ),
+        const SizedBox(width: 8),
+      ],
+      title: 'Login correcto',
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -41,9 +43,8 @@ class LoginResultScreen extends StatelessWidget {
 class _DataItem extends StatelessWidget {
   const _DataItem(
     this.field,
-    this.value, {
-    Key? key,
-  }) : super(key: key);
+    this.value,
+  );
   final String field;
   final String value;
   @override
@@ -51,7 +52,7 @@ class _DataItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(field, style: Theme.of(context).textTheme.headline6),
+        Text(field, style: Theme.of(context).textTheme.titleLarge),
         Text(value),
       ],
     );

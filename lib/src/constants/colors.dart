@@ -1,13 +1,31 @@
 part of constants;
 
+/// Colors used in the app
 class UdcColors {
-  static const green = Color(0xff4ea728);
-  static const darkGreen = Color(0xff007828);
-  static const yellow = Color(0xfffeca00);
-  static const darkYellow = Color(0xffbf9900);
-  static const red = Color(0xffe7003f);
-  static const darkRed = Color(0xffa8002d);
-  static const blue = Color(0xff23a3e5);
-  static const darkBlue = Color(0xff260063);
-  static const lowDarkBlue = Color(0xff1f92cc);
+  /// Secondary color
+  static const actionSecondary = Color(0xFF5F5EA3);
+
+  /// Primary color
+  static const actionPrimaryActive = Color(0xFFA3BF42);
+
+  /// Secondary base color
+  static const actionSecondaryBase = Color(0xFF5F5EA3);
+
+  /// Primary text color
+  static const textPrimary = Color(0xFF000000);
+
+  /// Secondary text color
+  static const textSecondary = Color(0xFF777777);
+
+  /// Danger color
+  static const actionDanger = Color(0xFFB33424);
+
+  /// Info color
+  static const actionInfo = Color(0xFF5BB8E3);
+
+  /// Success color
+  static const actionSuccess = Color(0xFF24B36C);
+
+  /// Warning color
+  static const actionWarning = Color(0xFFF2B705);
 }
