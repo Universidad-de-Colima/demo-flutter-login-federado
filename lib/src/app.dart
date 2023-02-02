@@ -1,6 +1,5 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
 // 🌎 Project imports:
 import 'package:wayf_login_udc/src/constants/constants_library.dart';
 import 'package:wayf_login_udc/src/models/models_library.dart';
@@ -24,8 +23,8 @@ class WayfLoginUDCApp extends StatelessWidget {
       routes: {
         '/home': (context) => WayfLoginButtonScreen(
               onWayfResolve: (data) => _onWayfResolve(data, context),
-              title: const Image(
-                image: UdcAssets.logoAsistencias,
+              title: Image.asset(
+                UdcAssets.logoAsistencias,
               ),
             ),
       },

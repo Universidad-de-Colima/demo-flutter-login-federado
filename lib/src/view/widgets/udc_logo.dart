@@ -40,8 +40,8 @@ class UdcLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Image(
-      image: UdcAssets.defaultIcon,
+    return Image.asset(
+      UdcAssets.defaultIcon,
     );
   }
 }
