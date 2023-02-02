@@ -1,53 +1,34 @@
 part of screens;
 
-/// Una pantalla para hacer login con la federación mediante un webview
-class WayfWebViewScreen extends StatefulWidget {
-  /// Crea un webview que sirve para hacer login con la federación y llama a
-  /// [onWayfResolve] cuando el resultado es devuelto
+/// Screen that shows a webview for logging in with the federation
+class WayfWebViewScreen extends StatelessWidget {
+  /// Create a webview that serves for logging in with the federation and calls
+  /// [onWayfResolve] when the result is returned.
   ///
-  /// Este widget puede usarse en conjunto con [WayfLoginButtonScreen] para
-  /// tener una mejor presentación inicial, pero es posible usar solo el webview
+  /// This widget can be used in conjunction with [WayfLoginButtonScreen] for a
+  /// better initial presentation, but it is possible to use only the webview.
   const WayfWebViewScreen({
     super.key,
     required this.onWayfResolve,
   });
-  final OnWayfResolve onWayfResolve;
-  @override
-  _WayfWebViewScreenState createState() => _WayfWebViewScreenState();
-}
 
-class _WayfWebViewScreenState extends State<WayfWebViewScreen> {
-  late final WebViewController _controller;
-  @override
-  void initState() {
-    super.initState();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(Colors.white70)
-      ..loadRequest(Uri.parse(loginWebViewUrl))
-      ..addJavaScriptChannel('Login', onMessageReceived: onMessageReceived);
-  }
+  /// Callback to be called when the login process is finished
+  final OnWayfResolve onWayfResolve;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: UdcColors.green,
-        foregroundColor: Colors.white,
-        title: const Text(
-          'Inicio de sesión',
-        ),
-      ),
-      body: WebViewWidget(
-        controller: _controller,
-      ),
+    return WebViewTemplate(
+      title: 'Inicio de sesión',
+      initialUrl: UdcHttp.loginWebViewUrl,
+      channelMessage: 'Login',
+      onMessageReceived: _onMessageReceived,
     );
   }
 
-  void onMessageReceived(JavaScriptMessage jsMessage) {
+  void _onMessageReceived(JavaScriptMessage jsMessage) {
     final wayfData = WayfLoginModel.fromJson(
       json.decode(jsMessage.message) as Map<String, dynamic>,
     );
-    widget.onWayfResolve(wayfData);
+    onWayfResolve(wayfData);
   }
 }

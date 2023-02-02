@@ -24,3 +24,5 @@ import_sorter:
   emojis: true
 flutter:
   uses-material-design: true
+  assets:
+    - lib/images/

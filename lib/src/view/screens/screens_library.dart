@@ -13,6 +13,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:wayf_login_udc/src/constants/constants_library.dart';
 import 'package:wayf_login_udc/src/models/models_library.dart';
 import 'package:wayf_login_udc/src/view/widgets/widgets_library.dart';
+import 'package:wayf_login_udc/src/widgets/templates/simple_scaffold_template.dart';
+import 'package:wayf_login_udc/src/widgets/templates/web_view_template.dart';
 import 'package:wayf_login_udc/src/widgets/way_logout_button.dart';
 
 part 'login_result_screen.dart';

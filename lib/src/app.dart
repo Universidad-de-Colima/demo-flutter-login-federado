@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
+import 'package:wayf_login_udc/src/constants/constants_library.dart';
 import 'package:wayf_login_udc/src/models/models_library.dart';
 import 'package:wayf_login_udc/src/view/screens/screens_library.dart';
 
@@ -12,23 +13,31 @@ class WayfLoginUDCApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.light().copyWith(brightness: Brightness.dark),
+      theme: ThemeData(
+        colorSchemeSeed: UdcColors.primary,
+        brightness: Brightness.light,
+        useMaterial3: true,
+      ),
       title: 'Wayf Login UdC',
       debugShowCheckedModeBanner: false,
       initialRoute: '/home',
       routes: {
         '/home': (context) => WayfLoginButtonScreen(
               onWayfResolve: (data) => _onWayfResolve(data, context),
+              title: const Image(
+                image: UdcAssets.logoAsistencias,
+              ),
             ),
       },
     );
   }
 
   void _onWayfResolve(WayfLoginModel wayfData, BuildContext context) {
-    Navigator.of(context).push<void>(
-      MaterialPageRoute(
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute<void>(
         builder: (context) => LoginResultScreen(data: wayfData),
       ),
+      (route) => false,
     );
   }
 }

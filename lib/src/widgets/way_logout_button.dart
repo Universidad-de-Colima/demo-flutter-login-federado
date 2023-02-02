@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import 'package:wayf_login_udc/src/constants/constants_library.dart';
-import 'package:wayf_login_udc/src/view/screens/screens_library.dart';
+import 'package:wayf_login_udc/wayf_login_udc.dart';
 
 /// Botón con estilos predefinidos para cerrar sesión
 ///
@@ -18,33 +17,32 @@ class WayfLogoutButton extends StatelessWidget {
   });
 
   /// Función llamada cuando el proceso ha terminado
-  final VoidCallback onWayfResolve;
+  final void Function(BuildContext) onWayfResolve;
   @override
   Widget build(BuildContext context) {
-    return ChoiceChip(
-      selected: false,
-      onSelected: (_) {
-        Navigator.of(context).push<void>(
-          MaterialPageRoute(
+    return TextButton.icon(
+      style: TextButton.styleFrom(
+        backgroundColor: UdcColors.danger,
+      ),
+      onPressed: () {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute<void>(
             builder: (context) => WayfWebViewLogoutScreen(
-              onWayfResolve: onWayfResolve,
+              onWayfResolve: () => onWayfResolve(context),
             ),
           ),
+          (route) => false,
         );
       },
-      backgroundColor: UdcColors.red,
       label: const Text(
-        'Cerrar sesión',
+        'Salir',
         style: TextStyle(
           color: Colors.white,
         ),
       ),
-      avatar: const CircleAvatar(
-        backgroundColor: UdcColors.red,
-        child: Icon(
-          Icons.power_settings_new,
-          color: Colors.white,
-        ),
+      icon: const Icon(
+        Icons.logout,
+        color: Colors.white,
       ),
     );
   }

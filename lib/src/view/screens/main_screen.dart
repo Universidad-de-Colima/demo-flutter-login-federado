@@ -11,19 +11,55 @@ class WayfLoginButtonScreen extends StatelessWidget {
   const WayfLoginButtonScreen({
     super.key,
     required this.onWayfResolve,
+    required this.title,
+    this.logo,
   });
+
+  /// Callback to be called when the login process is finished
   final OnWayfResolve onWayfResolve;
+
+  /// Widget to be displayed as title
+  ///
+  /// This widget is constrained based on the screen size, prefer using
+  /// a simple image or a text
+  final Widget title;
+
+  /// Widget to be displayed as logo
+  ///
+  /// This widget is constrained based on the screen size, prefer using
+  /// a simple image or a text, by default is the [UdcLogo]
+  final Widget? logo;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const UdcLogo(),
-            const SizedBox(height: 24),
-            BlueButton(onPressed: () => _toLogin(context)),
-          ],
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 3,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TitleConstraints(
+                      title: title,
+                    ),
+                    LogoConstraints(
+                      child: logo ?? const UdcLogo(),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: BottomSecondaryButton(
+                  onPressed: () => _toLogin(context),
+                  text: 'Iniciar sesión',
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

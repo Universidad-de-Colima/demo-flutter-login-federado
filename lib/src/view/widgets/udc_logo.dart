@@ -1,9 +1,17 @@
 part of widgets;
 
-class UdcLogo extends StatelessWidget {
-  const UdcLogo({
+/// Determinate the size of the widget [child] based on the screen size
+///
+/// This widget is used to constrain the logo widget
+class LogoConstraints extends StatelessWidget {
+  /// Determinate the size of the widget [child] based on the screen size
+  const LogoConstraints({
     super.key,
+    required this.child,
   });
+
+  /// Widget to be constrained and displayed as logo
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -11,17 +19,29 @@ class UdcLogo extends StatelessWidget {
     final screenSize = 0.8 * MediaQuery.of(context).size.width;
     final minSize = min(expectedSize, screenSize);
     final maxSize = max(expectedSize, screenSize);
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        minWidth: minSize,
-        maxWidth: maxSize,
-      ),
-      child: const Image(
-        image: NetworkImage(
-          'https://recursos.ucol.mx/tesis/img/logo_negro.png',
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minWidth: minSize,
+          maxWidth: maxSize,
         ),
-        semanticLabel: 'Logo Universidad de Colima',
+        child: child,
       ),
+    );
+  }
+}
+
+/// Widget to be displayed as logo by default
+class UdcLogo extends StatelessWidget {
+  /// Widget to be displayed as logo by default
+  const UdcLogo({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Image(
+      image: UdcAssets.defaultIcon,
     );
   }
 }

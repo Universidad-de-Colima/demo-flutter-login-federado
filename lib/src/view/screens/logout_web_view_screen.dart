@@ -1,50 +1,24 @@
 part of screens;
 
-/// Una pantalla para hacer logout de la federación mediante un webview
-class WayfWebViewLogoutScreen extends StatefulWidget {
-  /// Crea un webview para hacer login con la federación y llama a
-  /// [onWayfResolve] cuando el logout se ha completado
+/// Makes the logout process by showing a webview
+class WayfWebViewLogoutScreen extends StatelessWidget {
+  /// Creates a webview that serves for logging out with the federation and
+  /// calls [onWayfResolve] when the result is returned.
   const WayfWebViewLogoutScreen({
     super.key,
     required this.onWayfResolve,
   });
 
-  /// Función llamada cuando el logout se ha completado
+  /// Callback to be called when the logout process is finished
   final VoidCallback onWayfResolve;
-  @override
-  State<WayfWebViewLogoutScreen> createState() =>
-      _WayfWebViewLogoutScreenState();
-}
-
-class _WayfWebViewLogoutScreenState extends State<WayfWebViewLogoutScreen> {
-  late final WebViewController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(Colors.white70)
-      ..loadRequest(Uri.parse(logoutWebViewUrl))
-      ..addJavaScriptChannel(
-        'Logout',
-        onMessageReceived: (_) {
-          widget.onWayfResolve();
-        },
-      );
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: UdcColors.green,
-        foregroundColor: Colors.white,
-        title: const Text('Cerrar sesión'),
-      ),
-      body: WebViewWidget(
-        controller: _controller,
-      ),
+    return WebViewTemplate(
+      title: 'Cerrar sesión',
+      channelMessage: 'Logout',
+      initialUrl: UdcHttp.logoutWebViewUrl,
+      onMessageReceived: (_) => onWayfResolve(),
     );
   }
 }

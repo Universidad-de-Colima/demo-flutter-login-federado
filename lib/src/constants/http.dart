@@ -1,5 +1,12 @@
 part of constants;
 
-const baseHttpURL = 'https://sistemas3.ucol.mx/controlacceso/app';
-const loginWebViewUrl = '$baseHttpURL/login';
-const logoutWebViewUrl = '$baseHttpURL/logout';
+/// HTTP constants
+abstract class UdcHttp {
+  static const _baseHttpURL = 'https://sistemas3.ucol.mx/controlacceso/app';
+
+  /// Login URL
+  static const loginWebViewUrl = '$_baseHttpURL/login';
+
+  /// Logout URL
+  static const logoutWebViewUrl = '$_baseHttpURL/logout';
+}

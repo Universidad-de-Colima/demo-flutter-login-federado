@@ -9,19 +9,17 @@ class LoginResultScreen extends StatelessWidget {
   final WayfLoginModel data;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: UdcColors.green,
-        foregroundColor: Colors.white,
-        title: const Text('Login correcto'),
-        actions: [
-          WayfLogoutButton(
-            onWayfResolve: () {
-              Navigator.of(context).pushReplacementNamed('/home');
-            },
-          ),
-        ],
-      ),
+    return SimpleScaffoldTemplate(
+      actions: [
+        WayfLogoutButton(
+          onWayfResolve: (context) {
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('/home', (route) => false);
+          },
+        ),
+        const SizedBox(width: 8),
+      ],
+      title: 'Login correcto',
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
