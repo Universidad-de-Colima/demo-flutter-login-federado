@@ -28,7 +28,7 @@ class SimpleScaffoldTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: UdcColors.primary,
+        backgroundColor: UdcColors.actionPrimaryActive,
         foregroundColor: Colors.white,
         systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
           statusBarColor: Colors.white,

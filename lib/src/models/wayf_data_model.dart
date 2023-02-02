@@ -1,12 +1,12 @@
 part of models;
 
-/// La información que es devuelta por la federación es tipada en esta clase
+/// The information returned by the federation is typed in this class
 ///
-/// Cada campo es una lista de String pero son listas de un solo elemento
-/// Las listas siempre tendrán un campo que puede ser una cadena vacía cuando no
-/// hay datos
+/// Each field is a list of String but are lists of a single element
+/// The lists will always have one field that can be an empty string
+/// when there is no data
 class WayfLoginModel {
-  /// Crea los datos tipados cuando el login ha sido exitoso
+  /// Model for the data returned by the federated login
   WayfLoginModel({
     required this.uCorreo,
     required this.uNombre,
@@ -21,6 +21,7 @@ class WayfLoginModel {
     required this.givenName,
   });
 
+  /// Create a [WayfLoginModel] from a JSON object
   factory WayfLoginModel.fromJson(Map<String, dynamic> json) {
     return WayfLoginModel(
       // ignore: avoid_dynamic_calls
@@ -47,18 +48,41 @@ class WayfLoginModel {
       givenName: json['givenName'].cast<String>() as List<String>,
     );
   }
+
+  /// The email of the user
   List<String> uCorreo;
+
+  /// The name of the user
   List<String> uNombre;
+
+  /// The dependency of the user
   List<String> uDependencia;
+
+  /// The account number of the user
   List<String> uCuenta;
+
+  /// The employee number of the user
   List<String> uTrabajador;
+
+  /// The type of user
   List<String> uTipo;
+
+  /// The cn of the user
   List<String> cn;
+
+  /// The sn of the user
   List<String> sn;
+
+  /// The display name of the user
   List<String> displayName;
+
+  /// The immutable id of the user
   List<String> immutableID;
+
+  /// The given name of the user
   List<String> givenName;
 
+  /// Convert the [WayfLoginModel] to a JSON object
   Map<String, dynamic> toJson() {
     const data = <String, dynamic>{};
     data['uCorreo'] = uCorreo;

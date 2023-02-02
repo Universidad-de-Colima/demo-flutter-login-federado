@@ -22,7 +22,7 @@ class WayfLogoutButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton.icon(
       style: TextButton.styleFrom(
-        backgroundColor: UdcColors.danger,
+        backgroundColor: UdcColors.actionDanger,
       ),
       onPressed: () {
         Navigator.of(context).pushAndRemoveUntil(

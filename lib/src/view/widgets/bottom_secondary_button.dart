@@ -22,7 +22,7 @@ class BottomSecondaryButton extends StatelessWidget {
       width: media.size.width,
       height: double.infinity,
       decoration: const BoxDecoration(
-        color: UdcColors.secondary,
+        color: UdcColors.actionSecondary,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(72),
         ),

@@ -14,7 +14,7 @@ class WayfLoginUDCApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        colorSchemeSeed: UdcColors.primary,
+        colorSchemeSeed: UdcColors.actionPrimaryActive,
         brightness: Brightness.light,
         useMaterial3: true,
       ),
