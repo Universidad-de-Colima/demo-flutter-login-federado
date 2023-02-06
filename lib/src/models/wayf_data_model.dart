@@ -19,34 +19,33 @@ class WayfLoginModel {
     required this.displayName,
     required this.immutableID,
     required this.givenName,
+    required this.token,
   });
 
   /// Create a [WayfLoginModel] from a JSON object
   factory WayfLoginModel.fromJson(Map<String, dynamic> json) {
     return WayfLoginModel(
-      // ignore: avoid_dynamic_calls
-      uCorreo: json['uCorreo'].cast<String>() as List<String>,
-      // ignore: avoid_dynamic_calls
-      uNombre: json['uNombre'].cast<String>() as List<String>,
-      // ignore: avoid_dynamic_calls
-      uDependencia: json['uDependencia'].cast<String>() as List<String>,
-      // ignore: avoid_dynamic_calls
-      uCuenta: json['uCuenta'].cast<String>() as List<String>,
-      // ignore: avoid_dynamic_calls
-      uTrabajador: json['uTrabajador'].cast<String>() as List<String>,
-      // ignore: avoid_dynamic_calls
-      uTipo: json['uTipo'].cast<String>() as List<String>,
-      // ignore: avoid_dynamic_calls
-      cn: json['cn'].cast<String>() as List<String>,
-      // ignore: avoid_dynamic_calls
-      sn: json['sn'].cast<String>() as List<String>,
-      // ignore: avoid_dynamic_calls
-      displayName: json['displayName'].cast<String>() as List<String>,
-      // ignore: avoid_dynamic_calls
-      immutableID: json['ImmutableID'].cast<String>() as List<String>,
-      // ignore: avoid_dynamic_calls
-      givenName: json['givenName'].cast<String>() as List<String>,
+      uCorreo: _getProperty(json, 'uCorreo'),
+      uNombre: _getProperty(json, 'uNombre'),
+      uDependencia: _getProperty(json, 'uDependencia'),
+      uCuenta: _getProperty(json, 'uCuenta'),
+      uTrabajador: _getProperty(json, 'uTrabajador'),
+      uTipo: _getProperty(json, 'uTipo'),
+      cn: _getProperty(json, 'cn'),
+      sn: _getProperty(json, 'sn'),
+      displayName: _getProperty(json, 'displayName'),
+      immutableID: _getProperty(json, 'ImmutableID'),
+      givenName: _getProperty(json, 'givenName'),
+      token: _getProperty(json, 'token'),
     );
+  }
+
+  static List<T> _getProperty<T>(
+    Map<String, dynamic> json,
+    String property,
+  ) {
+    // ignore: avoid_dynamic_calls
+    return json[property].cast<T>() as List<T>;
   }
 
   /// The email of the user
@@ -82,6 +81,9 @@ class WayfLoginModel {
   /// The given name of the user
   List<String> givenName;
 
+  /// The token of the user
+  List<String> token;
+
   /// Convert the [WayfLoginModel] to a JSON object
   Map<String, dynamic> toJson() {
     const data = <String, dynamic>{};
@@ -96,6 +98,7 @@ class WayfLoginModel {
     data['displayName'] = displayName;
     data['ImmutableID'] = immutableID;
     data['givenName'] = givenName;
+    data['token'] = token;
     return data;
   }
 }
