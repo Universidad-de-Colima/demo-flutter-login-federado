@@ -1,11 +1,11 @@
-part of widgets;
+part of 'widgets_library.dart';
 
 /// Determinate the size of the widget [title] based on the screen size
 class TitleConstraints extends StatelessWidget {
   /// Determinate the size of the widget [title] based on the screen size
   const TitleConstraints({
-    super.key,
     required this.title,
+    super.key,
   });
 
   /// Widget to be constrained and displayed as title

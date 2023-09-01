@@ -1,4 +1,4 @@
-part of widgets;
+part of 'widgets_library.dart';
 
 /// Determinate the size of the widget [child] based on the screen size
 ///
@@ -6,8 +6,8 @@ part of widgets;
 class LogoConstraints extends StatelessWidget {
   /// Determinate the size of the widget [child] based on the screen size
   const LogoConstraints({
-    super.key,
     required this.child,
+    super.key,
   });
 
   /// Widget to be constrained and displayed as logo

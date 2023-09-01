@@ -1,9 +1,12 @@
-part of screens;
+part of 'screens_library.dart';
 
 /// Una pantalla que muestra los datos del usuario
 class LoginResultScreen extends StatelessWidget {
   /// Crea una pantalla que muestra los datos del usuario
-  const LoginResultScreen({super.key, required this.data});
+  const LoginResultScreen({
+    required this.data,
+    super.key,
+  });
 
   /// Los datos del usuario que se obtuvieron del webview
   final WayfLoginModel data;

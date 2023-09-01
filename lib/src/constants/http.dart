@@ -1,4 +1,4 @@
-part of constants;
+part of 'constants_library.dart';
 
 /// HTTP constants
 abstract class UdcHttp {

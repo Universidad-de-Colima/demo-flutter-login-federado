@@ -1,22 +1,20 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
-
-// 📦 Package imports:
-import 'package:webview_flutter/webview_flutter.dart';
-
 // 🌎 Project imports:
 import 'package:wayf_login_udc/src/widgets/templates/simple_scaffold_template.dart';
+// 📦 Package imports:
+import 'package:webview_flutter/webview_flutter.dart';
 
 /// Wrapper for [WebViewWidget] that allows to set the initial url and the
 /// channel message
 class WebViewTemplate extends StatefulWidget {
   /// Creates a webview that allow to omit the [WebViewController] creation
   const WebViewTemplate({
-    super.key,
     required this.initialUrl,
     required this.onMessageReceived,
     required this.channelMessage,
     required this.title,
+    super.key,
   });
 
   /// Initial url to be loaded

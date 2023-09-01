@@ -1,7 +1,6 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 // 🌎 Project imports:
 import 'package:wayf_login_udc/wayf_login_udc.dart';
 
@@ -9,9 +8,9 @@ import 'package:wayf_login_udc/wayf_login_udc.dart';
 class SimpleScaffoldTemplate extends StatelessWidget {
   /// Create a simple scaffold template
   const SimpleScaffoldTemplate({
-    super.key,
     required this.body,
     required this.title,
+    super.key,
     this.actions,
   });
 

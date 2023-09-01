@@ -1,4 +1,4 @@
-part of models;
+part of 'models_library.dart';
 
 /// The information returned by the federation is typed in this class
 ///
