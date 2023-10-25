@@ -1,4 +1,4 @@
-part of constants;
+part of 'constants_library.dart';
 
 /// Assets used in the app
 abstract class UdcAssets {

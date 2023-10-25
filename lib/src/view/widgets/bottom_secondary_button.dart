@@ -1,12 +1,12 @@
-part of widgets;
+part of 'widgets_library.dart';
 
 /// Styled button to place in bottom of screen
 class BottomSecondaryButton extends StatelessWidget {
   /// Styled button to place in bottom of screen
   const BottomSecondaryButton({
-    super.key,
     required this.onPressed,
     required this.text,
+    super.key,
   });
 
   /// Callback to be called when the button is pressed
@@ -37,7 +37,7 @@ class BottomSecondaryButton extends StatelessWidget {
               ),
             ),
           ),
-          const _Disclaimer()
+          const _Disclaimer(),
         ],
       ),
     );

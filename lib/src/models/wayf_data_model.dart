@@ -1,4 +1,4 @@
-part of models;
+part of 'models_library.dart';
 
 /// The information returned by the federation is typed in this class
 ///
@@ -20,6 +20,8 @@ class WayfLoginModel {
     required this.immutableID,
     required this.givenName,
     required this.token,
+    required this.tipoCuenta,
+    required this.uo,
   });
 
   /// Create a [WayfLoginModel] from a JSON object
@@ -37,68 +39,87 @@ class WayfLoginModel {
       immutableID: _getProperty(json, 'ImmutableID'),
       givenName: _getProperty(json, 'givenName'),
       token: _getProperty(json, 'token'),
+      tipoCuenta: _getProperty(json, 'TipoCuenta'),
+      uo: _getProperty(json, 'UO'),
     );
   }
 
-  static List<T> _getProperty<T>(
+  static T _getProperty<T>(
     Map<String, dynamic> json,
     String property,
   ) {
-    // ignore: avoid_dynamic_calls
-    return json[property].cast<T>() as List<T>;
+    final prop = json[property];
+    if (prop == null) {
+      if (null is T) return prop as T;
+
+      throw Exception('Property not found');
+    }
+    if (prop is List) {
+      final first = prop.first;
+      return first as T;
+    }
+    throw Exception('Invalid json prop');
   }
 
   /// The email of the user
-  List<String> uCorreo;
+  String uCorreo;
 
   /// The name of the user
-  List<String> uNombre;
+  String uNombre;
 
   /// The dependency of the user
-  List<String> uDependencia;
+  String uDependencia;
 
   /// The account number of the user
-  List<String> uCuenta;
+  String uCuenta;
 
   /// The employee number of the user
-  List<String> uTrabajador;
+  String uTrabajador;
 
   /// The type of user
-  List<String> uTipo;
+  String uTipo;
 
   /// The cn of the user
-  List<String> cn;
+  String cn;
 
   /// The sn of the user
-  List<String> sn;
+  String sn;
 
   /// The display name of the user
-  List<String> displayName;
+  String displayName;
+
+  /// Check the type of the account (ej. Personal)
+  String tipoCuenta;
+
+  /// "UO",  no info about this. (ej. Alumnos activos)
+  String? uo;
 
   /// The immutable id of the user
-  List<String> immutableID;
+  String immutableID;
 
   /// The given name of the user
-  List<String> givenName;
+  String? givenName;
 
   /// The token of the user
-  List<String> token;
+  String token;
 
   /// Convert the [WayfLoginModel] to a JSON object
   Map<String, dynamic> toJson() {
     const data = <String, dynamic>{};
-    data['uCorreo'] = uCorreo;
-    data['uNombre'] = uNombre;
-    data['uDependencia'] = uDependencia;
-    data['uCuenta'] = uCuenta;
-    data['uTrabajador'] = uTrabajador;
-    data['uTipo'] = uTipo;
-    data['cn'] = cn;
-    data['sn'] = sn;
-    data['displayName'] = displayName;
-    data['ImmutableID'] = immutableID;
-    data['givenName'] = givenName;
-    data['token'] = token;
+    data['uCorreo'] = [uCorreo];
+    data['uNombre'] = [uNombre];
+    data['uDependencia'] = [uDependencia];
+    data['uCuenta'] = [uCuenta];
+    data['uTrabajador'] = [uTrabajador];
+    data['uTipo'] = [uTipo];
+    data['cn'] = [cn];
+    data['sn'] = [sn];
+    data['ImmutableID'] = [immutableID];
+    data['givenName'] = [givenName];
+    data['token'] = [token];
+    data['displayName'] = [displayName];
+    data['UO'] = [uo];
+    data['TipoCuenta'] = [tipoCuenta];
     return data;
   }
 }

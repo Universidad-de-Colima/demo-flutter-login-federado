@@ -1,4 +1,4 @@
-part of screens;
+part of 'screens_library.dart';
 
 /// Screen that shows a webview for logging in with the federation
 class WayfWebViewScreen extends StatelessWidget {
@@ -8,8 +8,8 @@ class WayfWebViewScreen extends StatelessWidget {
   /// This widget can be used in conjunction with [WayfLoginButtonScreen] for a
   /// better initial presentation, but it is possible to use only the webview.
   const WayfWebViewScreen({
-    super.key,
     required this.onWayfResolve,
+    super.key,
   });
 
   /// Callback to be called when the login process is finished

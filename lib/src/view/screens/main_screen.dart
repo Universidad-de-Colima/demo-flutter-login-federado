@@ -1,4 +1,4 @@
-part of screens;
+part of 'screens_library.dart';
 
 /// Una pantalla que muestra un botón para abrir un webview y comenzar el
 /// proceso de login con la federación
@@ -9,10 +9,10 @@ class WayfLoginButtonScreen extends StatelessWidget {
   /// El callback [onWayfResolve] es pasado directamente a la pantalla del web
   /// view
   const WayfLoginButtonScreen({
-    super.key,
     required this.onWayfResolve,
     required this.title,
     this.logo,
+    super.key,
   });
 
   /// Callback to be called when the login process is finished
