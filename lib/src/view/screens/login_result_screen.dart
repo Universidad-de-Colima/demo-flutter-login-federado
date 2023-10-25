@@ -28,14 +28,14 @@ class LoginResultScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _DataItem('Nombre', data.displayName.first),
-            _DataItem('Tipo', data.uTipo.first),
-            if (data.uTipo.first == 'Estudiante')
-              _DataItem('No. Cuenta', data.uCuenta.first),
-            if (data.uTipo.first != 'Estudiante')
-              _DataItem('No. Trabajador', data.uTrabajador.first),
-            _DataItem('Correo', data.uCorreo.first),
-            _DataItem('Dependencia', data.uDependencia.first),
+            _DataItem('Nombre', data.displayName),
+            _DataItem('Tipo', data.uTipo),
+            if (data.uTipo == 'Estudiante')
+              _DataItem('No. Cuenta', data.uCuenta),
+            if (data.uTipo != 'Estudiante')
+              _DataItem('No. Trabajador', data.uTrabajador),
+            _DataItem('Correo', data.uCorreo),
+            _DataItem('Dependencia', data.uDependencia),
           ],
         ),
       ),

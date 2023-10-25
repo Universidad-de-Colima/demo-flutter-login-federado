@@ -35,7 +35,6 @@ Una pantalla provisional para mostrar la información obtenida en el login con l
 
 Se exporta las clases abstractas de **UdcColors** con los colores usados en el diseño y pueden ser usados para otras aplicaciones.
 
-
 ## Uso
 
 Aumenta la minSdkVersion a la 19
@@ -50,7 +49,7 @@ defaultConfig {
 
 Puedes usar este repositorio desde github o accediendo a este [link](https://github.com/Universidad-de-Colima/demo-flutter-login-federado/generate)
 
-Este repositorio es una aplicación completa que puedes correr ejecutando desde el archivo main.dart.
+Este repositorio es una aplicación completa que puedes correr ejecutando el proyecto desde el archivo main.dart.
 
 Contiene los iconos para android y una aplicación de entrada en app.dart
 
@@ -92,7 +91,7 @@ dart format --fix -l 80 lib
 fvm flutter pub run import_sorter:main
 ```
 
-This commands are in the script format.sh, in UNIX-like systems just run 
+This commands are in the script format.sh, in UNIX-like systems just run
 
 ```bash
 chmod +x ./format.sh
@@ -103,4 +102,4 @@ chmod +x ./format.sh
 
 Federación de Identidades de la Universidad de Colima
 
--   [Federación UCOL](https://portal.ucol.mx/federacion-identidades/) - Página oficial
+- [Federación UCOL](https://portal.ucol.mx/federacion-identidades/) - Página oficial
