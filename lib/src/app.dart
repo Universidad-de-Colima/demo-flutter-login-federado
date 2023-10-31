@@ -1,9 +1,15 @@
-// 🐦 Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-// 🌎 Project imports:
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:wayf_login_udc/src/constants/constants_library.dart';
 import 'package:wayf_login_udc/src/models/models_library.dart';
 import 'package:wayf_login_udc/src/view/screens/screens_library.dart';
+
+AndroidOptions _getAndroidOptions() => const AndroidOptions(
+      encryptedSharedPreferences: true,
+    );
+final _storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
 
 /// Esta es una aplicación de prueba, puede usarse posteriormente como plantilla
 class WayfLoginUDCApp extends StatelessWidget {
@@ -23,6 +29,21 @@ class WayfLoginUDCApp extends StatelessWidget {
       routes: {
         '/home': (context) => WayfLoginButtonScreen(
               onWayfResolve: (data) => _onWayfResolve(data, context),
+              loadExistingLogin: () async {
+                final data = await _storage.read(key: 'loginData');
+                if (data == null) return null;
+                return WayfLoginModel.fromJson(
+                  json.decode(data) as Map<String, dynamic>,
+                );
+              },
+              validateExistingLogin: (data) {
+                final now = DateTime.now();
+                final sessionCreated = data.sessionCreated;
+                final expires = sessionCreated.copyWith(
+                  day: sessionCreated.day + 1,
+                );
+                return now.isBefore(expires);
+              },
               title: Image.asset(
                 UdcAssets.logoAsistencias,
               ),
@@ -32,9 +53,18 @@ class WayfLoginUDCApp extends StatelessWidget {
   }
 
   void _onWayfResolve(WayfLoginModel wayfData, BuildContext context) {
+    _storage.write(
+      key: 'loginData',
+      value: json.encode(wayfData.toJson()),
+    );
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute<void>(
-        builder: (context) => LoginResultScreen(data: wayfData),
+        builder: (context) => LoginResultScreen(
+          onLogout: () async {
+            await _storage.delete(key: 'loginData');
+          },
+          data: wayfData,
+        ),
       ),
       (route) => false,
     );

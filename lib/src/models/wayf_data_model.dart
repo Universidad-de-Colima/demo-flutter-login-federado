@@ -22,10 +22,12 @@ class WayfLoginModel {
     required this.token,
     required this.tipoCuenta,
     required this.uo,
+    required this.sessionCreated,
   });
 
   /// Create a [WayfLoginModel] from a JSON object
   factory WayfLoginModel.fromJson(Map<String, dynamic> json) {
+    final jsonDate = _getProperty<String?>(json, 'sessionCreated');
     return WayfLoginModel(
       uCorreo: _getProperty(json, 'uCorreo'),
       uNombre: _getProperty(json, 'uNombre'),
@@ -41,6 +43,9 @@ class WayfLoginModel {
       token: _getProperty(json, 'token'),
       tipoCuenta: _getProperty(json, 'TipoCuenta'),
       uo: _getProperty(json, 'UO'),
+      sessionCreated: jsonDate == null
+          ? DateTime.now().toLocal()
+          : DateTime.parse(jsonDate).toLocal(),
     );
   }
 
@@ -103,23 +108,29 @@ class WayfLoginModel {
   /// The token of the user
   String token;
 
+  /// When this session is created, useful for retake the session
+  /// without login again
+  DateTime sessionCreated;
+
   /// Convert the [WayfLoginModel] to a JSON object
   Map<String, dynamic> toJson() {
-    const data = <String, dynamic>{};
-    data['uCorreo'] = [uCorreo];
-    data['uNombre'] = [uNombre];
-    data['uDependencia'] = [uDependencia];
-    data['uCuenta'] = [uCuenta];
-    data['uTrabajador'] = [uTrabajador];
-    data['uTipo'] = [uTipo];
-    data['cn'] = [cn];
-    data['sn'] = [sn];
-    data['ImmutableID'] = [immutableID];
-    data['givenName'] = [givenName];
-    data['token'] = [token];
-    data['displayName'] = [displayName];
-    data['UO'] = [uo];
-    data['TipoCuenta'] = [tipoCuenta];
+    final data = <String, dynamic>{
+      'uCorreo': [uCorreo],
+      'uNombre': [uNombre],
+      'uDependencia': [uDependencia],
+      'uCuenta': [uCuenta],
+      'uTrabajador': [uTrabajador],
+      'uTipo': [uTipo],
+      'cn': [cn],
+      'sn': [sn],
+      'ImmutableID': [immutableID],
+      'givenName': [givenName],
+      'token': [token],
+      'displayName': [displayName],
+      'UO': [uo],
+      'TipoCuenta': [tipoCuenta],
+      'sessionCreated': [sessionCreated.toIso8601String()],
+    };
     return data;
   }
 }

@@ -6,6 +6,7 @@ class BottomSecondaryButton extends StatelessWidget {
   const BottomSecondaryButton({
     required this.onPressed,
     required this.text,
+    this.authButton,
     super.key,
   });
 
@@ -14,6 +15,10 @@ class BottomSecondaryButton extends StatelessWidget {
 
   /// Text to be displayed in the button
   final String text;
+
+  /// If are implementing a method to retake the session, pass the widget
+  /// to be displayed in the bottom of the screen
+  final Widget? authButton;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +42,7 @@ class BottomSecondaryButton extends StatelessWidget {
               ),
             ),
           ),
+          if (authButton != null) authButton!,
           const _Disclaimer(),
         ],
       ),

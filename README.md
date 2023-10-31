@@ -73,6 +73,34 @@ Importa el paquete en donde necesites usar los widget **WayfWebViewScreen**
 
 ```dart
 import 'package:wayf_login_udc/wayf_login_udc.dart';
+
+WayfLoginButtonScreen(
+  /// Alamana el resultado en tu estado, también puedes guardarlo en tu almacenamiento local para retomarlo después 
+  onWayfResolve: (data) => _onWayfResolve(data, context),
+  /// Este método es opcional para verificar si existe una sesión previa
+  ///
+  /// Si no se provee, se asume que no existe una sesión previa, si se provee deberá hacer cambios para la integración con la biometria del 
+  /// dispositivo, revisa el siguiente enlace https://pub.dev/packages/local_auth
+  loadExistingLogin: () async {
+    final data = await _storage.read(key: 'loginData'); /// En el ejemplo se usa flutter_secure_storage para guardar la información
+    if (data == null) return null;
+    return WayfLoginModel.fromJson(
+      json.decode(data) as Map<String, dynamic>,
+    );
+  },
+  /// Verifica si una sesión es válida, en este ejemplo se valida que la sesión no haya expirado en un día
+  validateExistingLogin: (data) {
+    final now = DateTime.now();
+    final sessionCreated = data.sessionCreated;
+    final expires = sessionCreated.copyWith(
+      day: sessionCreated.day + 1,
+    );
+    return now.isBefore(expires);
+  },
+  title: Image.asset(
+    UdcAssets.logoAsistencias,
+  ),
+);
 ```
 
 ## For developers

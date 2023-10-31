@@ -5,17 +5,22 @@ class LoginResultScreen extends StatelessWidget {
   /// Crea una pantalla que muestra los datos del usuario
   const LoginResultScreen({
     required this.data,
+    this.onLogout,
     super.key,
   });
 
   /// Los datos del usuario que se obtuvieron del webview
   final WayfLoginModel data;
+
+  /// Called when the user press the logout button
+  final Future<void> Function()? onLogout;
   @override
   Widget build(BuildContext context) {
     return SimpleScaffoldTemplate(
       actions: [
         WayfLogoutButton(
           onWayfResolve: (context) {
+            onLogout?.call();
             Navigator.of(context)
                 .pushNamedAndRemoveUntil('/home', (route) => false);
           },
