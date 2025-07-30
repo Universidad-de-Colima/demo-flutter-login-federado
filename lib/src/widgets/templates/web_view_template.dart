@@ -35,6 +35,22 @@ class WebViewTemplate extends StatefulWidget {
 
 class _WebViewTemplateState extends State<WebViewTemplate> {
   late final WebViewController _controller;
+  // bool _hasError = false;
+  // String _errorMessage = '';
+
+  // Future<void> _loadUrl() async {
+  //   setState(() {
+  //     _hasError = false;
+  //   });
+  //   try {
+  //     await _controller.loadRequest(Uri.parse(widget.initialUrl));
+  //   } catch (e) {
+  //     setState(() {
+  //       _hasError = true;
+  //       _errorMessage = 'Failed to load URL: $e';
+  //     });
+  //   }
+  // }
 
   @override
   void initState() {
@@ -42,11 +58,37 @@ class _WebViewTemplateState extends State<WebViewTemplate> {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(Colors.white70)
-      ..loadRequest(Uri.parse(widget.initialUrl))
-      ..addJavaScriptChannel(
-        widget.channelMessage,
-        onMessageReceived: widget.onMessageReceived,
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageStarted: (String url) {
+            print('Page started loading: $url');
+          },
+          // onPageFinished: (String url) {
+          //   setState(() {
+          //     _hasError = false;
+          //     _errorMessage = '';
+          //   });
+          //   print('Page finished loading: $url');
+          // },
+          // onWebResourceError: (WebResourceError error) {
+          //   setState(() {
+          //     _hasError = true;
+          //     _errorMessage =
+          //         '${error.description}\nError code: ${error.errorCode}';
+          //   });
+          //   print('Error: ${error.description}');
+          // },
+        ),
       );
+
+    _controller.addJavaScriptChannel(
+      widget.channelMessage,
+      onMessageReceived: widget.onMessageReceived,
+    );
+
+    _controller.loadRequest(Uri.parse(widget.initialUrl));
+
+    // _loadUrl(); // Initial load
   }
 
   @override
@@ -55,11 +97,51 @@ class _WebViewTemplateState extends State<WebViewTemplate> {
     super.dispose();
   }
 
+  // Widget _buildErrorDisplay() {
+  //   return Center(
+  //     child: Container(
+  //       padding: const EdgeInsets.all(16),
+  //       child: Column(
+  //         mainAxisAlignment: MainAxisAlignment.center,
+  //         children: [
+  //           const Icon(
+  //             Icons.error_outline,
+  //             color: Colors.red,
+  //             size: 48,
+  //           ),
+  //           const SizedBox(height: 16),
+  //           Text(
+  //             'Ha ocurrido un error',
+  //             style: Theme.of(context).textTheme.titleLarge?.copyWith(
+  //                   color: Colors.red,
+  //                 ),
+  //           ),
+  //           const SizedBox(height: 8),
+  //           Text(
+  //             _errorMessage,
+  //             textAlign: TextAlign.center,
+  //             style: Theme.of(context).textTheme.bodyMedium,
+  //           ),
+  //           const SizedBox(height: 16),
+  //           ElevatedButton(
+  //             onPressed: _loadUrl, // Use _loadUrl instead of reload()
+  //             child: const Text('Intentar de nuevo'),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return SimpleScaffoldTemplate(
       title: widget.title,
-      body: WebViewWidget(
+      body:
+          // _hasError
+          // ? _buildErrorDisplay()
+          // :
+          WebViewWidget(
         controller: _controller,
       ),
     );

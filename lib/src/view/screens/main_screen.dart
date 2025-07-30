@@ -126,7 +126,9 @@ class _HomeContent extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) {
-          return WayfWebViewScreen(onWayfResolve: onWayfResolve);
+          return WayfWebViewScreen(
+            onWayfResolve: onWayfResolve,
+          );
         },
       ),
     );
@@ -191,26 +193,58 @@ class _LoadExistingLoginState extends State<_LoadExistingLogin> {
   Widget build(BuildContext context) {
     if (!_isSupported) return const SizedBox.shrink();
     return Center(
-      child: IconButton(
-        icon: const Icon(
-          Icons.fingerprint,
-          size: 52,
-          color: Colors.white,
-        ),
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.transparent),
-          padding: MaterialStateProperty.all(EdgeInsets.zero),
-          shape: MaterialStateProperty.all(
-            const CircleBorder(),
-          ),
-          overlayColor: MaterialStateProperty.all(
-            Colors.white.withOpacity(0.1),
-          ),
-        ),
-        onPressed: () {
-          _loadExistingLogin(widget.data);
-        },
-      ),
+      child: Platform.isIOS
+          ? Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5), // Rounded corners
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26, // Subtle shadow color
+                    blurRadius: 6, // Slight blur for the shadow
+                    offset: Offset(3, 5), // Shadow position (x, y)
+                  ),
+                ],
+              ),
+              child: IconButton(
+                icon: Image.asset(
+                  UdcAssets.faceId,
+                  package: 'wayf_login_udc',
+                  height: 35,
+                ),
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(Colors.white),
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  _loadExistingLogin(widget.data);
+                },
+              ),
+            )
+          : IconButton(
+              icon: const Icon(
+                Icons.fingerprint,
+                size: 52,
+                color: Colors.white,
+              ),
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(Colors.transparent),
+                padding: WidgetStateProperty.all(EdgeInsets.zero),
+                shape: WidgetStateProperty.all(
+                  const CircleBorder(),
+                ),
+                overlayColor: WidgetStateProperty.all(
+                  Colors.white.withOpacity(0.1),
+                ),
+              ),
+              onPressed: () {
+                _loadExistingLogin(widget.data);
+              },
+            ),
     );
   }
 

@@ -1,12 +1,17 @@
 {
-    "[dart]": {
-        "editor.formatOnSave": true,
-        "editor.rulers": [80],
-        "editor.selectionHighlight": true,
-        "editor.suggest.snippetsPreventQuickSuggestions": false,
-        "editor.suggestSelection": "first",
-        "editor.tabCompletion": "onlySnippets",
-        "editor.wordBasedSuggestions": false
-    },
-    "cSpell.words": ["Wayf"]
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.rulers": [
+      80
+    ],
+    "editor.selectionHighlight": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "cSpell.words": [
+    "Wayf"
+  ],
+  "dart.flutterSdkPath": ".fvm/versions/3.22.2"
 }

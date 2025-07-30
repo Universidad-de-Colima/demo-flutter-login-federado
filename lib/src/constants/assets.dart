@@ -7,4 +7,6 @@ abstract class UdcAssets {
 
   /// Default application icon for main screen
   static const defaultIcon = 'lib/images/login-image.png';
+
+  static const faceId = 'lib/images/Faceid.png';
 }
