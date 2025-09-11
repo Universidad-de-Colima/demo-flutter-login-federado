@@ -9,9 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_secure_storage: 9.0.0
-  local_auth: 2.1.7
-  webview_flutter: 4.4.1
+  flutter_secure_storage: ^9.2.2
+  local_auth: ^2.3.0
+  webview_flutter: ^4.8.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
