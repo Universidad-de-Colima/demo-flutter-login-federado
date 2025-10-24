@@ -100,8 +100,11 @@ class _HomeContent extends StatelessWidget {
   final Widget? logo;
   final Widget? authIcon;
   final OnWayfResolve onWayfResolve;
+
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -111,10 +114,29 @@ class _HomeContent extends StatelessWidget {
         ),
         Expanded(
           flex: authIcon != null ? 2 : 1,
-          child: BottomSecondaryButton(
-            onPressed: () => _toLogin(context),
-            text: 'Iniciar sesión',
-            authButton: authIcon,
+          child: Column(
+            children: [
+              Expanded(
+                child: BottomSecondaryButton(
+                  onPressed: () => _toLogin(context),
+                  text: 'Iniciar sesión',
+                  authButton: authIcon,
+                ),
+              ),
+              Container(
+                width: media.size.width,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: const BoxDecoration(
+                  color: UdcColors.actionSecondary,
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _PrivacyNoticeLink(),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -286,6 +308,86 @@ class _LoadExistingLoginState extends State<_LoadExistingLogin> {
       return allowed;
     } catch (e) {
       return false;
+    }
+  }
+}
+
+class _PrivacyNoticeLink extends StatelessWidget {
+  const _PrivacyNoticeLink();
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _openPrivacyNotice(context),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            'Aviso de Privacidad',
+            style: TextStyle(
+              color: Colors.white,
+              decoration: TextDecoration.underline,
+              fontSize: 11,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Versión 1.0.9+17',
+            style: const TextStyle(
+              color: Colors.white70,
+              fontSize: 10,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _openPrivacyNotice(BuildContext context) async {
+    const url =
+        'https://transparencia.ucol.mx/avisosdeprivacidad/asistenciasudec/';
+    try {
+      final uri = Uri.parse(url);
+
+      // Simple approach: try launchUrl directly with external application mode
+      await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+    } catch (e) {
+      debugPrint('Error with externalApplication launch mode: $e');
+      try {
+        // Fallback: try with platform default mode
+        final uri = Uri.parse(url);
+        await launchUrl(
+          uri,
+          mode: LaunchMode.platformDefault,
+        );
+      } catch (e) {
+        debugPrint('Error with platformDefault launch mode: $e');
+        try {
+          // Last resort: try inAppWebView
+          final uri = Uri.parse(url);
+          await launchUrl(
+            uri,
+            mode: LaunchMode.inAppWebView,
+          );
+        } catch (e) {
+          debugPrint('Error with inAppWebView launch mode: $e');
+          // Show user feedback
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content:
+                    Text('No se pudo abrir el enlace del aviso de privacidad'),
+                duration: Duration(seconds: 3),
+              ),
+            );
+          }
+        }
+      }
     }
   }
 }

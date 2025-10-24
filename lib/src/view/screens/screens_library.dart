@@ -17,6 +17,7 @@ import 'package:wayf_login_udc/src/widgets/templates/web_view_template.dart';
 import 'package:wayf_login_udc/src/widgets/way_logout_button.dart';
 // 📦 Package imports:
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'login_result_screen.dart';
 part 'logout_web_view_screen.dart';
