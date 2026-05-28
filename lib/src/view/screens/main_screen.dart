@@ -15,6 +15,13 @@ class WayfLoginButtonScreen extends StatelessWidget {
     this.validateExistingLogin,
     this.logo,
     super.key,
+    this.buttonTitle = 'Iniciar sesión',
+    this.loginButtonIcon,
+    this.loginButtonStyle,
+    this.privacyUrl,
+    this.showPrivacyNotice = true,
+    this.version,
+    this.copyrightPeriod,
   });
 
   /// Callback to be called when the login process is finished
@@ -42,6 +49,26 @@ class WayfLoginButtonScreen extends StatelessWidget {
   /// If this function returns true, the login process is skipped
   final bool Function(WayfLoginModel)? validateExistingLogin;
 
+  final String buttonTitle;
+
+  /// Optional icon to display inside the login button
+  final Widget? loginButtonIcon;
+
+  /// Optional style to apply to the login button
+  final ButtonStyle? loginButtonStyle;
+
+  /// URL for the privacy notice link; if null, defaults to the built-in URL
+  final String? privacyUrl;
+
+  /// Whether to show the privacy notice link at the bottom
+  final bool showPrivacyNotice;
+
+  /// Version string displayed next to the privacy notice, e.g. 'Versión 1.0.0'
+  final String? version;
+
+  /// Copyright period string, e.g. '2022 - 2026'
+  final String? copyrightPeriod;
+
   @override
   Widget build(BuildContext context) {
     final content = _HomeContent(
@@ -49,6 +76,13 @@ class WayfLoginButtonScreen extends StatelessWidget {
       logo: logo,
       authIcon: null,
       onWayfResolve: onWayfResolve,
+      buttonTitle: buttonTitle,
+      loginButtonIcon: loginButtonIcon,
+      loginButtonStyle: loginButtonStyle,
+      privacyUrl: privacyUrl,
+      showPrivacyNotice: showPrivacyNotice,
+      version: version,
+      copyrightPeriod: copyrightPeriod,
     );
     if (loadExistingLogin == null) {
       return Scaffold(
@@ -79,6 +113,13 @@ class WayfLoginButtonScreen extends StatelessWidget {
                   onWayfResolve: onWayfResolve,
                   validateExistingLogin: validateExistingLogin,
                 ),
+                buttonTitle: buttonTitle,
+                loginButtonIcon: loginButtonIcon,
+                loginButtonStyle: loginButtonStyle,
+                privacyUrl: privacyUrl,
+                showPrivacyNotice: showPrivacyNotice,
+                version: version,
+                copyrightPeriod: copyrightPeriod,
               );
             },
           ),
@@ -94,12 +135,26 @@ class _HomeContent extends StatelessWidget {
     required this.logo,
     required this.authIcon,
     required this.onWayfResolve,
+    this.buttonTitle = 'Iniciar sesión',
+    this.loginButtonIcon,
+    this.loginButtonStyle,
+    this.privacyUrl,
+    this.showPrivacyNotice = true,
+    this.version,
+    this.copyrightPeriod,
   });
 
   final Widget title;
   final Widget? logo;
   final Widget? authIcon;
   final OnWayfResolve onWayfResolve;
+  final String buttonTitle;
+  final Widget? loginButtonIcon;
+  final ButtonStyle? loginButtonStyle;
+  final String? privacyUrl;
+  final bool showPrivacyNotice;
+  final String? version;
+  final String? copyrightPeriod;
 
   @override
   Widget build(BuildContext context) {
@@ -119,23 +174,30 @@ class _HomeContent extends StatelessWidget {
               Expanded(
                 child: BottomSecondaryButton(
                   onPressed: () => _toLogin(context),
-                  text: 'Iniciar sesión',
+                  text: buttonTitle,
                   authButton: authIcon,
+                  buttonIcon: loginButtonIcon,
+                  buttonStyle: loginButtonStyle,
+                  copyrightPeriod: copyrightPeriod,
                 ),
               ),
-              Container(
-                width: media.size.width,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: const BoxDecoration(
-                  color: UdcColors.actionSecondary,
+              if (showPrivacyNotice)
+                Container(
+                  width: media.size.width,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  decoration: const BoxDecoration(
+                    color: UdcColors.actionSecondary,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _PrivacyNoticeLink(
+                        version: version ?? 'Versión 1.0.14+22',
+                        privacyUrl: privacyUrl,
+                      ),
+                    ],
+                  ),
                 ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _PrivacyNoticeLink(),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
@@ -313,7 +375,10 @@ class _LoadExistingLoginState extends State<_LoadExistingLogin> {
 }
 
 class _PrivacyNoticeLink extends StatelessWidget {
-  const _PrivacyNoticeLink();
+  const _PrivacyNoticeLink({required this.version, this.privacyUrl});
+
+  final String version;
+  final String? privacyUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -333,7 +398,7 @@ class _PrivacyNoticeLink extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'Versión 1.0.9+17',
+            version,
             style: const TextStyle(
               color: Colors.white70,
               fontSize: 10,
@@ -346,7 +411,7 @@ class _PrivacyNoticeLink extends StatelessWidget {
   }
 
   void _openPrivacyNotice(BuildContext context) async {
-    const url =
+    final url = privacyUrl ??
         'https://transparencia.ucol.mx/avisosdeprivacidad/asistenciasudec/';
     try {
       final uri = Uri.parse(url);
