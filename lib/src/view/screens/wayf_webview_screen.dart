@@ -54,6 +54,13 @@ class WayfWebViewScreen extends StatelessWidget {
       } else if (context.mounted) {
         Navigator.of(context).pop();
       }
+    } catch (e) {
+      debugPrint('WayfWebViewScreen unexpected payload error: $e');
+      if (onWayfError != null) {
+        onWayfError!(e.toString());
+      } else if (context.mounted) {
+        Navigator.of(context).pop();
+      }
     }
   }
 }

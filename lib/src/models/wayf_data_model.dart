@@ -71,8 +71,12 @@ class WayfLoginModel {
     String property,
   ) {
     final prop = json[property];
-    if (prop == null) {
-      if (null is T) return prop as T;
+    if (prop == null || (prop is List && prop.isEmpty)) {
+      if (null is T) return null as T;
+      // The federation does not always return every attribute (e.g. some
+      // accounts have no `token`); default to an empty string rather than
+      // crashing the whole login flow over a field nothing depends on.
+      if ('' is T) return '' as T;
 
       throw Exception('Property not found');
     }
