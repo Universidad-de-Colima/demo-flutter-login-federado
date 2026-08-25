@@ -34,6 +34,7 @@ class WayfLoginModel {
     required this.immutableID,
     required this.givenName,
     required this.token,
+    required this.authToken,
     required this.tipoCuenta,
     required this.uo,
     required this.sessionCreated,
@@ -58,6 +59,10 @@ class WayfLoginModel {
       immutableID: _getProperty(json, 'ImmutableID'),
       givenName: _getProperty(json, 'givenName'),
       token: _getProperty(json, 'token'),
+      // Unlike the other fields, `auth` arrives from the IdP as a plain
+      // string (the signed session JWT), not wrapped in a single-element
+      // list, so it can't go through `_getProperty`.
+      authToken: json['auth'] as String? ?? '',
       tipoCuenta: _getProperty(json, 'TipoCuenta'),
       uo: _getProperty(json, 'UO'),
       sessionCreated: jsonDate == null
@@ -129,6 +134,11 @@ class WayfLoginModel {
   /// The token of the user
   String token;
 
+  /// Signed session JWT (HS256) returned by the federation as `auth`. Used
+  /// to validate/expire a cached session locally without re-authenticating
+  /// against the IdP.
+  String authToken;
+
   /// When this session is created, useful for retake the session
   /// without login again
   DateTime sessionCreated;
@@ -147,6 +157,7 @@ class WayfLoginModel {
       'ImmutableID': [immutableID],
       'givenName': [givenName],
       'token': [token],
+      'auth': authToken,
       'displayName': [displayName],
       'UO': [uo],
       'TipoCuenta': [tipoCuenta],
