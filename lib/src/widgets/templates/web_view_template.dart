@@ -14,6 +14,7 @@ class WebViewTemplate extends StatefulWidget {
     required this.onMessageReceived,
     required this.channelMessage,
     required this.title,
+    this.userAgent,
     super.key,
   });
 
@@ -28,6 +29,10 @@ class WebViewTemplate extends StatefulWidget {
 
   /// The title to display in a [AppBar]
   final String title;
+
+  /// User agent to be used by the webview; if null, the platform default is
+  /// used
+  final String? userAgent;
 
   @override
   State<WebViewTemplate> createState() => _WebViewTemplateState();
@@ -57,29 +62,34 @@ class _WebViewTemplateState extends State<WebViewTemplate> {
     super.initState();
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(Colors.white70)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onPageStarted: (String url) {
-            print('Page started loading: $url');
-          },
-          // onPageFinished: (String url) {
-          //   setState(() {
-          //     _hasError = false;
-          //     _errorMessage = '';
-          //   });
-          //   print('Page finished loading: $url');
-          // },
-          // onWebResourceError: (WebResourceError error) {
-          //   setState(() {
-          //     _hasError = true;
-          //     _errorMessage =
-          //         '${error.description}\nError code: ${error.errorCode}';
-          //   });
-          //   print('Error: ${error.description}');
-          // },
-        ),
-      );
+      ..setBackgroundColor(Colors.white70);
+
+    if (widget.userAgent != null) {
+      _controller.setUserAgent(widget.userAgent);
+    }
+
+    _controller.setNavigationDelegate(
+      NavigationDelegate(
+        onPageStarted: (String url) {
+          print('Page started loading: $url');
+        },
+        // onPageFinished: (String url) {
+        //   setState(() {
+        //     _hasError = false;
+        //     _errorMessage = '';
+        //   });
+        //   print('Page finished loading: $url');
+        // },
+        // onWebResourceError: (WebResourceError error) {
+        //   setState(() {
+        //     _hasError = true;
+        //     _errorMessage =
+        //         '${error.description}\nError code: ${error.errorCode}';
+        //   });
+        //   print('Error: ${error.description}');
+        // },
+      ),
+    );
 
     _controller.addJavaScriptChannel(
       widget.channelMessage,

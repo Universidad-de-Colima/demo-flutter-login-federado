@@ -1,5 +1,19 @@
 part of 'models_library.dart';
 
+/// Thrown when the federation returns an error payload (e.g.
+/// `{"error": "Acceso no autorizado x org"}`) instead of login data.
+class WayfLoginException implements Exception {
+  /// Creates a [WayfLoginException] with the [message] returned by the
+  /// federation
+  WayfLoginException(this.message);
+
+  /// The error message returned by the federation
+  final String message;
+
+  @override
+  String toString() => 'WayfLoginException: $message';
+}
+
 /// The information returned by the federation is typed in this class
 ///
 /// Each field is a list of String but are lists of a single element
@@ -27,6 +41,9 @@ class WayfLoginModel {
 
   /// Create a [WayfLoginModel] from a JSON object
   factory WayfLoginModel.fromJson(Map<String, dynamic> json) {
+    final error = json['error'];
+    if (error != null) throw WayfLoginException(error.toString());
+
     final jsonDate = _getProperty<String?>(json, 'sessionCreated');
     return WayfLoginModel(
       uCorreo: _getProperty(json, 'uCorreo'),

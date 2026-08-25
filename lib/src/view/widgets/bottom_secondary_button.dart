@@ -79,11 +79,12 @@ class _ButtonWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
+    final verticalPad = (media.size.height * 0.018).clamp(8.0, 15.0);
     final defaultStyle = TextButton.styleFrom(
       backgroundColor: Colors.white,
       padding: EdgeInsets.symmetric(
         horizontal: media.size.width * 0.1,
-        vertical: 15,
+        vertical: verticalPad,
       ),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -117,10 +118,12 @@ class _ButtonText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fontSize =
+        (MediaQuery.of(context).size.shortestSide * 0.05).clamp(14.0, 20.0);
     return Text(
       text,
-      style: const TextStyle(
-        fontSize: 20,
+      style: TextStyle(
+        fontSize: fontSize,
         fontWeight: FontWeight.w500,
         height: 1.1,
         color: UdcColors.textPrimary,
@@ -137,8 +140,10 @@ class _Disclaimer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final period = copyrightPeriod ?? '2022 - 2025';
+    final verticalPad =
+        (MediaQuery.of(context).size.height * 0.025).clamp(8.0, 24.0);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24),
+      padding: EdgeInsets.symmetric(vertical: verticalPad),
       child: Text(
         '© Derechos Reservados $period Universidad de Colima',
         style: const TextStyle(

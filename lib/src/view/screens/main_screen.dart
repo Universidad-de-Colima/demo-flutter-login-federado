@@ -11,6 +11,7 @@ class WayfLoginButtonScreen extends StatelessWidget {
   const WayfLoginButtonScreen({
     required this.onWayfResolve,
     required this.title,
+    this.onWayfError,
     this.loadExistingLogin,
     this.validateExistingLogin,
     this.logo,
@@ -22,10 +23,16 @@ class WayfLoginButtonScreen extends StatelessWidget {
     this.showPrivacyNotice = true,
     this.version,
     this.copyrightPeriod,
+    this.loginUrl,
+    this.userAgent,
   });
 
   /// Callback to be called when the login process is finished
   final OnWayfResolve onWayfResolve;
+
+  /// Callback to be called when the federation returns an error instead of
+  /// a successful login payload (e.g. an unauthorized-organization response)
+  final OnWayfError? onWayfError;
 
   /// Widget to be displayed as title
   ///
@@ -69,21 +76,30 @@ class WayfLoginButtonScreen extends StatelessWidget {
   /// Copyright period string, e.g. '2022 - 2026'
   final String? copyrightPeriod;
 
+  /// Optional URL for the login page, if not provided, the default URL is used
+  final String? loginUrl;
+
+  /// Optional user agent for the login webview; if not provided, the
+  /// platform default is used
+  final String? userAgent;
+
   @override
   Widget build(BuildContext context) {
     final content = _HomeContent(
-      title: title,
-      logo: logo,
-      authIcon: null,
-      onWayfResolve: onWayfResolve,
-      buttonTitle: buttonTitle,
-      loginButtonIcon: loginButtonIcon,
-      loginButtonStyle: loginButtonStyle,
-      privacyUrl: privacyUrl,
-      showPrivacyNotice: showPrivacyNotice,
-      version: version,
-      copyrightPeriod: copyrightPeriod,
-    );
+        title: title,
+        logo: logo,
+        authIcon: null,
+        onWayfResolve: onWayfResolve,
+        onWayfError: onWayfError,
+        buttonTitle: buttonTitle,
+        loginButtonIcon: loginButtonIcon,
+        loginButtonStyle: loginButtonStyle,
+        privacyUrl: privacyUrl,
+        showPrivacyNotice: showPrivacyNotice,
+        version: version,
+        copyrightPeriod: copyrightPeriod,
+        loginUrl: loginUrl,
+        userAgent: userAgent,);
     if (loadExistingLogin == null) {
       return Scaffold(
         body: SafeArea(
@@ -108,6 +124,7 @@ class WayfLoginButtonScreen extends StatelessWidget {
                 title: title,
                 logo: logo,
                 onWayfResolve: onWayfResolve,
+                onWayfError: onWayfError,
                 authIcon: _LoadExistingLogin(
                   data: snapshot.data!,
                   onWayfResolve: onWayfResolve,
@@ -120,6 +137,8 @@ class WayfLoginButtonScreen extends StatelessWidget {
                 showPrivacyNotice: showPrivacyNotice,
                 version: version,
                 copyrightPeriod: copyrightPeriod,
+                loginUrl: loginUrl,
+                userAgent: userAgent,
               );
             },
           ),
@@ -135,6 +154,7 @@ class _HomeContent extends StatelessWidget {
     required this.logo,
     required this.authIcon,
     required this.onWayfResolve,
+    this.onWayfError,
     this.buttonTitle = 'Iniciar sesión',
     this.loginButtonIcon,
     this.loginButtonStyle,
@@ -142,12 +162,15 @@ class _HomeContent extends StatelessWidget {
     this.showPrivacyNotice = true,
     this.version,
     this.copyrightPeriod,
+    this.loginUrl,
+    this.userAgent,
   });
 
   final Widget title;
   final Widget? logo;
   final Widget? authIcon;
   final OnWayfResolve onWayfResolve;
+  final OnWayfError? onWayfError;
   final String buttonTitle;
   final Widget? loginButtonIcon;
   final ButtonStyle? loginButtonStyle;
@@ -156,19 +179,26 @@ class _HomeContent extends StatelessWidget {
   final String? version;
   final String? copyrightPeriod;
 
+  /// URL for the login webview; if null, defaults to the built-in URL
+  final String? loginUrl;
+
+  /// User agent for the login webview; if null, the platform default is used
+  final String? userAgent;
+
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
+    final isSmall = media.size.height < 600;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
-          flex: authIcon != null ? 4 : 3,
+          flex: authIcon != null ? (isSmall ? 3 : 4) : (isSmall ? 2 : 3),
           child: _Title(title: title, logo: logo),
         ),
         Expanded(
-          flex: authIcon != null ? 2 : 1,
+          flex: isSmall ? 2 : (authIcon != null ? 2 : 1),
           child: Column(
             children: [
               Expanded(
@@ -206,12 +236,19 @@ class _HomeContent extends StatelessWidget {
   }
 
   void _toLogin(BuildContext context) {
+    // Guards against a double-tap pushing this route twice before the first
+    // push completes, which races two WKWebView platform views for the same
+    // native view id and crashes with a `recreating_view` PlatformException.
+    if (ModalRoute.of(context)?.isCurrent != true) return;
     Navigator.push<void>(
       context,
       MaterialPageRoute(
         builder: (context) {
           return WayfWebViewScreen(
             onWayfResolve: onWayfResolve,
+            onWayfError: onWayfError,
+            loginUrl: loginUrl,
+            userAgent: userAgent,
           );
         },
       ),

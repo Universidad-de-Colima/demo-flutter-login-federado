@@ -6,6 +6,8 @@ class LoginResultScreen extends StatelessWidget {
   const LoginResultScreen({
     required this.data,
     this.onLogout,
+    this.logoutUrl,
+    this.userAgent,
     super.key,
   });
 
@@ -14,6 +16,14 @@ class LoginResultScreen extends StatelessWidget {
 
   /// Called when the user press the logout button
   final Future<void> Function()? onLogout;
+
+  /// URL para el webview de cierre de sesión; si es null, se usa la URL
+  /// predefinida
+  final String? logoutUrl;
+
+  /// User agent para el webview de cierre de sesión; si es null, se usa el
+  /// predefinido de la plataforma
+  final String? userAgent;
   @override
   Widget build(BuildContext context) {
     return SimpleScaffoldTemplate(
@@ -24,6 +34,8 @@ class LoginResultScreen extends StatelessWidget {
             Navigator.of(context)
                 .pushNamedAndRemoveUntil('/home', (route) => false);
           },
+          logoutUrl: logoutUrl,
+          userAgent: userAgent,
         ),
         const SizedBox(width: 8),
       ],

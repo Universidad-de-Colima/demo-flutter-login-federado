@@ -13,11 +13,21 @@ class WayfLogoutButton extends StatelessWidget {
   /// cerrar una sesión en la federación
   const WayfLogoutButton({
     required this.onWayfResolve,
+    this.logoutUrl,
+    this.userAgent,
     super.key,
   });
 
   /// Función llamada cuando el proceso ha terminado
   final void Function(BuildContext) onWayfResolve;
+
+  /// URL para el webview de cierre de sesión; si es null, se usa la URL
+  /// predefinida
+  final String? logoutUrl;
+
+  /// User agent para el webview de cierre de sesión; si es null, se usa el
+  /// predefinido de la plataforma
+  final String? userAgent;
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
@@ -29,6 +39,8 @@ class WayfLogoutButton extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (context) => WayfWebViewLogoutScreen(
               onWayfResolve: () => onWayfResolve(context),
+              logoutUrl: logoutUrl,
+              userAgent: userAgent,
             ),
           ),
           (route) => false,
