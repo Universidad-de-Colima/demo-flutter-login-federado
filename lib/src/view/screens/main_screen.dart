@@ -86,20 +86,21 @@ class WayfLoginButtonScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final content = _HomeContent(
-        title: title,
-        logo: logo,
-        authIcon: null,
-        onWayfResolve: onWayfResolve,
-        onWayfError: onWayfError,
-        buttonTitle: buttonTitle,
-        loginButtonIcon: loginButtonIcon,
-        loginButtonStyle: loginButtonStyle,
-        privacyUrl: privacyUrl,
-        showPrivacyNotice: showPrivacyNotice,
-        version: version,
-        copyrightPeriod: copyrightPeriod,
-        loginUrl: loginUrl,
-        userAgent: userAgent,);
+      title: title,
+      logo: logo,
+      authIcon: null,
+      onWayfResolve: onWayfResolve,
+      onWayfError: onWayfError,
+      buttonTitle: buttonTitle,
+      loginButtonIcon: loginButtonIcon,
+      loginButtonStyle: loginButtonStyle,
+      privacyUrl: privacyUrl,
+      showPrivacyNotice: showPrivacyNotice,
+      version: version,
+      copyrightPeriod: copyrightPeriod,
+      loginUrl: loginUrl,
+      userAgent: userAgent,
+    );
     if (loadExistingLogin == null) {
       return Scaffold(
         body: SafeArea(
@@ -188,17 +189,19 @@ class _HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
-    final isSmall = media.size.height < 600;
+    final isSmallHeight = media.size.height < 600;
+    final isSmallWidth = media.size.width < 360;
+    final isSmall = isSmallHeight || isSmallWidth;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
-          flex: authIcon != null ? (isSmall ? 3 : 4) : (isSmall ? 2 : 3),
+          flex: authIcon != null ? (isSmall ? 2 : 4) : (isSmall ? 2 : 3),
           child: _Title(title: title, logo: logo),
         ),
         Expanded(
-          flex: isSmall ? 2 : (authIcon != null ? 2 : 1),
+          flex: isSmall ? 3 : (authIcon != null ? 2 : 1),
           child: Column(
             children: [
               Expanded(
@@ -214,7 +217,7 @@ class _HomeContent extends StatelessWidget {
               if (showPrivacyNotice)
                 Container(
                   width: media.size.width,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: EdgeInsets.symmetric(vertical: isSmall ? 6 : 16),
                   decoration: const BoxDecoration(
                     color: UdcColors.actionSecondary,
                   ),
@@ -267,16 +270,19 @@ class _Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        TitleConstraints(
-          title: title,
-        ),
-        LogoConstraints(
-          child: logo ?? const UdcLogo(),
-        ),
-      ],
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          TitleConstraints(
+            title: title,
+          ),
+          LogoConstraints(
+            child: logo ?? const UdcLogo(),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -370,12 +376,16 @@ class _LoadExistingLoginState extends State<_LoadExistingLogin> {
   }
 
   Future<bool> _loadValid(WayfLoginModel data) async {
-    final canAuthenticateWithBiometrics = await _auth.canCheckBiometrics;
-    final canAuthenticate =
-        canAuthenticateWithBiometrics || await _auth.isDeviceSupported();
+    // `isDeviceSupported` solo indica que el hardware/OS soporta biometría,
+    // no que haya una huella/Face ID enrolada — un iPhone con Face ID nunca
+    // configurado igual regresa `true`. Por eso se valida además que
+    // `getAvailableBiometrics` no esté vacío.
+    final canCheck = await _auth.canCheckBiometrics;
+    final isDeviceSupported = await _auth.isDeviceSupported();
+    if (!canCheck || !isDeviceSupported) return false;
 
-    if (!canAuthenticate) return false;
-    return true;
+    final availableBiometrics = await _auth.getAvailableBiometrics();
+    return availableBiometrics.isNotEmpty;
   }
 
   Future<void> _loadExistingLogin(WayfLoginModel? data) async {
@@ -393,10 +403,8 @@ class _LoadExistingLoginState extends State<_LoadExistingLogin> {
     try {
       final allowed = await _auth.authenticate(
         localizedReason: 'Por favor, autentícate para continuar',
-        options: const AuthenticationOptions(
-          biometricOnly: true,
-          stickyAuth: true,
-        ),
+        biometricOnly: true,
+        persistAcrossBackgrounding: true,
         authMessages: [
           const AndroidAuthMessages(
             signInTitle: 'Iniciar sesión',
@@ -412,10 +420,11 @@ class _LoadExistingLoginState extends State<_LoadExistingLogin> {
 }
 
 class _PrivacyNoticeLink extends StatelessWidget {
-  const _PrivacyNoticeLink({required this.version, this.privacyUrl});
+  _PrivacyNoticeLink({required this.version, this.privacyUrl});
 
   final String version;
   final String? privacyUrl;
+  final isiOS = Platform.isIOS ? 'i' : 'A';
 
   @override
   Widget build(BuildContext context) {
@@ -435,7 +444,7 @@ class _PrivacyNoticeLink extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            version,
+            version + isiOS,
             style: const TextStyle(
               color: Colors.white70,
               fontSize: 10,

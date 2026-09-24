@@ -6,9 +6,7 @@ import 'package:wayf_login_udc/src/constants/constants_library.dart';
 import 'package:wayf_login_udc/src/models/models_library.dart';
 import 'package:wayf_login_udc/src/view/screens/screens_library.dart';
 
-AndroidOptions _getAndroidOptions() => const AndroidOptions(
-      encryptedSharedPreferences: true,
-    );
+AndroidOptions _getAndroidOptions() => AndroidOptions.defaultOptions;
 final _storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
 
 /// Esta es una aplicación de prueba, puede usarse posteriormente como plantilla
