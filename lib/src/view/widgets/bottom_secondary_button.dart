@@ -10,8 +10,14 @@ class BottomSecondaryButton extends StatelessWidget {
     this.buttonIcon,
     this.buttonStyle,
     this.copyrightPeriod,
+    this.sidePanel = false,
     super.key,
   });
+
+  /// Whether the panel is displayed at the side of the screen (landscape)
+  /// instead of at the bottom, which rounds the left corners instead of the
+  /// top ones
+  final bool sidePanel;
 
   /// Callback to be called when the button is pressed
   final VoidCallback onPressed;
@@ -34,15 +40,14 @@ class BottomSecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context);
     return Container(
-      width: media.size.width,
+      width: double.infinity,
       height: double.infinity,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: UdcColors.actionSecondary,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(72),
-        ),
+        borderRadius: sidePanel
+            ? const BorderRadius.horizontal(left: Radius.circular(72))
+            : const BorderRadius.vertical(top: Radius.circular(72)),
       ),
       child: Column(
         children: [
@@ -78,12 +83,12 @@ class _ButtonWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context);
-    final verticalPad = (media.size.height * 0.018).clamp(8.0, 15.0);
+    final size = MediaQuery.sizeOf(context);
+    final verticalPad = (size.height * 0.018).clamp(8.0, 15.0);
     final defaultStyle = TextButton.styleFrom(
       backgroundColor: Colors.white,
       padding: EdgeInsets.symmetric(
-        horizontal: media.size.width * 0.1,
+        horizontal: (size.width * 0.1).clamp(24.0, 56.0),
         vertical: verticalPad,
       ),
       shape: const RoundedRectangleBorder(
@@ -119,7 +124,7 @@ class _ButtonText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fontSize =
-        (MediaQuery.of(context).size.shortestSide * 0.05).clamp(14.0, 20.0);
+        (MediaQuery.sizeOf(context).shortestSide * 0.05).clamp(14.0, 28.0);
     return Text(
       text,
       style: TextStyle(
@@ -139,6 +144,7 @@ class _Disclaimer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scale = adaptiveTextScale(context);
     final period = copyrightPeriod ?? '2022 - 2025';
     final verticalPad =
         (MediaQuery.of(context).size.height * 0.025).clamp(8.0, 24.0);
@@ -146,8 +152,8 @@ class _Disclaimer extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: verticalPad),
       child: Text(
         '© Derechos Reservados $period Universidad de Colima',
-        style: const TextStyle(
-          fontSize: 10,
+        style: TextStyle(
+          fontSize: 10 * scale,
           fontWeight: FontWeight.w400,
           color: Colors.white,
           height: 1.1,

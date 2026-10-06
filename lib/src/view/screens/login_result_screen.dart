@@ -40,20 +40,26 @@ class LoginResultScreen extends StatelessWidget {
         const SizedBox(width: 8),
       ],
       title: 'Login correcto',
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _DataItem('Nombre', data.displayName),
-            _DataItem('Tipo', data.uTipo),
-            if (data.uTipo == 'Estudiante')
-              _DataItem('No. Cuenta', data.uCuenta),
-            if (data.uTipo != 'Estudiante')
-              _DataItem('No. Trabajador', data.uTrabajador),
-            _DataItem('Correo', data.uCorreo),
-            _DataItem('Dependencia', data.uDependencia),
-          ],
+      body: Align(
+        alignment: Alignment.topCenter,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 640),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _DataItem('Nombre', data.displayName),
+                _DataItem('Tipo', data.uTipo),
+                if (data.uTipo == 'Estudiante')
+                  _DataItem('No. Cuenta', data.uCuenta),
+                if (data.uTipo != 'Estudiante')
+                  _DataItem('No. Trabajador', data.uTrabajador),
+                _DataItem('Correo', data.uCorreo),
+                _DataItem('Dependencia', data.uDependencia),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -69,11 +75,24 @@ class _DataItem extends StatelessWidget {
   final String value;
   @override
   Widget build(BuildContext context) {
+    final scale = MediaQuery.sizeOf(context).shortestSide >= 600 ? 1.4 : 1.0;
+    final theme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(field, style: Theme.of(context).textTheme.titleLarge),
-        Text(value),
+        Text(
+          field,
+          style: theme.titleLarge?.copyWith(
+            fontSize: (theme.titleLarge?.fontSize ?? 22) * scale,
+          ),
+        ),
+        Text(
+          value,
+          style: theme.bodyMedium?.copyWith(
+            fontSize: (theme.bodyMedium?.fontSize ?? 14) * scale,
+          ),
+        ),
+        SizedBox(height: 8 * scale),
       ],
     );
   }

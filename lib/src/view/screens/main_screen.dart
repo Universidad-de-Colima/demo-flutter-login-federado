@@ -188,52 +188,79 @@ class _HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context);
-    final isSmallHeight = media.size.height < 600;
-    final isSmallWidth = media.size.width < 360;
-    final isSmall = isSmallHeight || isSmallWidth;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final height = constraints.maxHeight;
+        // Side-by-side layout when there is clearly more room horizontally
+        // (phones/tablets in landscape); stacked layout otherwise.
+        final isLandscape = width > height * 1.2;
+        final isSmall = height < 600 || width < 360;
 
+        final header = _Title(title: title, logo: logo);
+        final panel = _buildPanel(context, isSmall, sidePanel: isLandscape);
+
+        if (isLandscape) {
+          return Row(
+            children: [
+              Expanded(child: header),
+              Expanded(child: panel),
+            ],
+          );
+        }
+
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: authIcon != null ? (isSmall ? 2 : 4) : (isSmall ? 2 : 3),
+              child: header,
+            ),
+            Expanded(
+              flex: isSmall ? 3 : (authIcon != null ? 2 : 1),
+              child: panel,
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildPanel(
+    BuildContext context,
+    bool isSmall, {
+    required bool sidePanel,
+  }) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
-          flex: authIcon != null ? (isSmall ? 2 : 4) : (isSmall ? 2 : 3),
-          child: _Title(title: title, logo: logo),
-        ),
-        Expanded(
-          flex: isSmall ? 3 : (authIcon != null ? 2 : 1),
-          child: Column(
-            children: [
-              Expanded(
-                child: BottomSecondaryButton(
-                  onPressed: () => _toLogin(context),
-                  text: buttonTitle,
-                  authButton: authIcon,
-                  buttonIcon: loginButtonIcon,
-                  buttonStyle: loginButtonStyle,
-                  copyrightPeriod: copyrightPeriod,
-                ),
-              ),
-              if (showPrivacyNotice)
-                Container(
-                  width: media.size.width,
-                  padding: EdgeInsets.symmetric(vertical: isSmall ? 6 : 16),
-                  decoration: const BoxDecoration(
-                    color: UdcColors.actionSecondary,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _PrivacyNoticeLink(
-                        version: version ?? 'Versión 1.0.14+22',
-                        privacyUrl: privacyUrl,
-                      ),
-                    ],
-                  ),
-                ),
-            ],
+          child: BottomSecondaryButton(
+            onPressed: () => _toLogin(context),
+            text: buttonTitle,
+            authButton: authIcon,
+            buttonIcon: loginButtonIcon,
+            buttonStyle: loginButtonStyle,
+            copyrightPeriod: copyrightPeriod,
+            sidePanel: sidePanel,
           ),
         ),
+        if (showPrivacyNotice)
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: isSmall ? 6 : 16),
+            decoration: const BoxDecoration(
+              color: UdcColors.actionSecondary,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _PrivacyNoticeLink(
+                  version: version ?? 'Versión 1.0.14+22',
+                  privacyUrl: privacyUrl,
+                ),
+              ],
+            ),
+          ),
       ],
     );
   }
@@ -428,26 +455,27 @@ class _PrivacyNoticeLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scale = adaptiveTextScale(context);
     return GestureDetector(
       onTap: () => _openPrivacyNotice(context),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
+          Text(
             'Aviso de Privacidad',
             style: TextStyle(
               color: Colors.white,
               decoration: TextDecoration.underline,
-              fontSize: 11,
+              fontSize: 11 * scale,
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 4),
           Text(
             version + isiOS,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white70,
-              fontSize: 10,
+              fontSize: 10 * scale,
             ),
             textAlign: TextAlign.center,
           ),

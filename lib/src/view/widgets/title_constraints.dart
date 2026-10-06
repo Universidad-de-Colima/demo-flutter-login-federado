@@ -12,10 +12,9 @@ class TitleConstraints extends StatelessWidget {
   final Widget title;
   @override
   Widget build(BuildContext context) {
-    const expectedSize = 200.0;
-    final screenSize = 0.7 * MediaQuery.of(context).size.width;
-    final minSize = min(expectedSize, screenSize);
-    final maxSize = max(expectedSize, screenSize);
+    final shortest = MediaQuery.sizeOf(context).shortestSide;
+    final maxSize = (0.7 * shortest).clamp(160.0, 300.0);
+    final minSize = min(200.0, maxSize);
     return ConstrainedBox(
       constraints: BoxConstraints(
         minWidth: minSize,
@@ -24,4 +23,11 @@ class TitleConstraints extends StatelessWidget {
       child: title,
     );
   }
+}
+
+/// Scale factor for fixed font sizes: 1.0 on phones, growing up to 1.6 on
+/// tablets (based on the shortest side so rotating doesn't change it).
+double adaptiveTextScale(BuildContext context) {
+  final shortest = MediaQuery.sizeOf(context).shortestSide;
+  return (shortest / 400).clamp(1.0, 1.6);
 }
