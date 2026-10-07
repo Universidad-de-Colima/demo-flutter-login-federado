@@ -1,4 +1,6 @@
 // 🐦 Flutter imports:
+// ignore_for_file: unawaited_futures
+
 import 'package:flutter/material.dart';
 // 🌎 Project imports:
 import 'package:wayf_login_udc/src/widgets/templates/simple_scaffold_template.dart';
@@ -68,35 +70,34 @@ class _WebViewTemplateState extends State<WebViewTemplate> {
       _controller.setUserAgent(widget.userAgent);
     }
 
-    _controller.setNavigationDelegate(
-      NavigationDelegate(
-        onPageStarted: (String url) {
-          print('Page started loading: $url');
-        },
-        // onPageFinished: (String url) {
-        //   setState(() {
-        //     _hasError = false;
-        //     _errorMessage = '';
-        //   });
-        //   print('Page finished loading: $url');
-        // },
-        // onWebResourceError: (WebResourceError error) {
-        //   setState(() {
-        //     _hasError = true;
-        //     _errorMessage =
-        //         '${error.description}\nError code: ${error.errorCode}';
-        //   });
-        //   print('Error: ${error.description}');
-        // },
-      ),
-    );
-
-    _controller.addJavaScriptChannel(
-      widget.channelMessage,
-      onMessageReceived: widget.onMessageReceived,
-    );
-
-    _controller.loadRequest(Uri.parse(widget.initialUrl));
+    _controller
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageStarted: (url) {
+            print('Page started loading: $url');
+          },
+          // onPageFinished: (String url) {
+          //   setState(() {
+          //     _hasError = false;
+          //     _errorMessage = '';
+          //   });
+          //   print('Page finished loading: $url');
+          // },
+          // onWebResourceError: (WebResourceError error) {
+          //   setState(() {
+          //     _hasError = true;
+          //     _errorMessage =
+          //         '${error.description}\nError code: ${error.errorCode}';
+          //   });
+          //   print('Error: ${error.description}');
+          // },
+        ),
+      )
+      ..addJavaScriptChannel(
+        widget.channelMessage,
+        onMessageReceived: widget.onMessageReceived,
+      )
+      ..loadRequest(Uri.parse(widget.initialUrl));
 
     // _loadUrl(); // Initial load
   }

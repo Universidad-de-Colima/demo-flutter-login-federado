@@ -1,10 +1,10 @@
-// 🐦 Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-// 🌎 Project imports:
-import 'package:wayf_login_udc/wayf_login_udc.dart';
+// 📦 Package imports:
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 
-/// Expose a simple scaffold template with styles app bar
+// 🐦 Flutter imports:
+import 'package:flutter/widgets.dart';
+
+/// Expose a simple scaffold template with an adaptive app bar
 class SimpleScaffoldTemplate extends StatelessWidget {
   /// Create a simple scaffold template
   const SimpleScaffoldTemplate({
@@ -17,28 +17,16 @@ class SimpleScaffoldTemplate extends StatelessWidget {
   /// The body of the scaffold
   final Widget body;
 
-  /// The title to display in a [AppBar]
+  /// The title to display in the app bar
   final String title;
 
-  /// The actions to display in a [AppBar]
-  final List<Widget>? actions;
+  /// The actions to display in the app bar
+  final List<AdaptiveAppBarAction>? actions;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: UdcColors.actionPrimaryActive,
-        foregroundColor: Colors.white,
-        systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
-          statusBarColor: Colors.white,
-        ),
-        actions: actions,
-        title: Row(
-          children: [
-            Text(title),
-          ],
-        ),
-      ),
+    return AdaptiveScaffold(
+      appBar: AdaptiveAppBar(title: title, actions: actions),
       body: body,
     );
   }

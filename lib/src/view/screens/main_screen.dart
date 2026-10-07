@@ -209,17 +209,12 @@ class _HomeContent extends StatelessWidget {
           );
         }
 
+        // The panel takes its natural height so the button never gets
+        // clipped; the header scales down to the remaining space.
         return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              flex: authIcon != null ? (isSmall ? 2 : 4) : (isSmall ? 2 : 3),
-              child: header,
-            ),
-            Expanded(
-              flex: isSmall ? 3 : (authIcon != null ? 2 : 1),
-              child: panel,
-            ),
+            Expanded(child: header),
+            panel,
           ],
         );
       },
@@ -231,26 +226,18 @@ class _HomeContent extends StatelessWidget {
     bool isSmall, {
     required bool sidePanel,
   }) {
-    return Column(
+    final content = Column(
+      mainAxisSize: sidePanel ? MainAxisSize.max : MainAxisSize.min,
       children: [
-        Expanded(
-          child: BottomSecondaryButton(
-            onPressed: () => _toLogin(context),
-            text: buttonTitle,
-            authButton: authIcon,
-            buttonIcon: loginButtonIcon,
-            buttonStyle: loginButtonStyle,
-            copyrightPeriod: copyrightPeriod,
-            sidePanel: sidePanel,
-          ),
-        ),
+        if (sidePanel)
+          Expanded(child: _button(context, sidePanel))
+        else
+          _button(context, sidePanel),
         if (showPrivacyNotice)
           Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(vertical: isSmall ? 6 : 16),
-            decoration: const BoxDecoration(
-              color: UdcColors.actionSecondary,
-            ),
+            color: UdcColors.actionSecondary,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -262,6 +249,24 @@ class _HomeContent extends StatelessWidget {
             ),
           ),
       ],
+    );
+    if (!sidePanel) return content;
+    // One rounded shape for button + privacy notice
+    return ClipRRect(
+      borderRadius: const BorderRadius.horizontal(left: Radius.circular(72)),
+      child: content,
+    );
+  }
+
+  Widget _button(BuildContext context, bool sidePanel) {
+    return BottomSecondaryButton(
+      onPressed: () => _toLogin(context),
+      text: buttonTitle,
+      authButton: authIcon,
+      buttonIcon: loginButtonIcon,
+      buttonStyle: loginButtonStyle,
+      copyrightPeriod: copyrightPeriod,
+      sidePanel: sidePanel,
     );
   }
 

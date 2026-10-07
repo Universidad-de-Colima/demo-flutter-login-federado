@@ -13,7 +13,7 @@ class TitleConstraints extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final shortest = MediaQuery.sizeOf(context).shortestSide;
-    final maxSize = (0.7 * shortest).clamp(160.0, 300.0);
+    final maxSize = (0.7 * shortest).clamp(160.0, 480.0);
     final minSize = min(200.0, maxSize);
     return ConstrainedBox(
       constraints: BoxConstraints(

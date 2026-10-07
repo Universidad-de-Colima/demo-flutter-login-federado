@@ -15,10 +15,10 @@ class LogoConstraints extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Based on the shortest side (and capped) so the logo doesn't blow up on
-    // tablets or when the device rotates to landscape.
+    // Based on the shortest side so it grows on tablets without changing when
+    // the device rotates; capped so it doesn't get oversized on large windows.
     final shortest = MediaQuery.sizeOf(context).shortestSide;
-    final maxSize = (0.8 * shortest).clamp(160.0, 320.0);
+    final maxSize = (0.8 * shortest).clamp(160.0, 560.0);
     final minSize = min(200.0, maxSize);
     return Center(
       child: ConstrainedBox(

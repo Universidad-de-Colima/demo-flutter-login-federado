@@ -15,8 +15,8 @@ class BottomSecondaryButton extends StatelessWidget {
   });
 
   /// Whether the panel is displayed at the side of the screen (landscape)
-  /// instead of at the bottom, which rounds the left corners instead of the
-  /// top ones
+  /// instead of at the bottom. The parent is then in charge of the rounded
+  /// corners and the panel fills the available height.
   final bool sidePanel;
 
   /// Callback to be called when the button is pressed
@@ -38,29 +38,34 @@ class BottomSecondaryButton extends StatelessWidget {
   /// Copyright period, e.g. '2022 - 2026'. Defaults to '2022 - 2025' if null.
   final String? copyrightPeriod;
 
+  Widget _button() => _ButtonWrapper(
+        onPressed: onPressed,
+        text: text,
+        icon: buttonIcon,
+        style: buttonStyle,
+      );
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: double.infinity,
+      height: sidePanel ? double.infinity : null,
       decoration: BoxDecoration(
         color: UdcColors.actionSecondary,
         borderRadius: sidePanel
-            ? const BorderRadius.horizontal(left: Radius.circular(72))
+            ? null
             : const BorderRadius.vertical(top: Radius.circular(72)),
       ),
       child: Column(
+        mainAxisSize: sidePanel ? MainAxisSize.max : MainAxisSize.min,
         children: [
-          Expanded(
-            child: Center(
-              child: _ButtonWrapper(
-                onPressed: onPressed,
-                text: text,
-                icon: buttonIcon,
-                style: buttonStyle,
-              ),
+          if (sidePanel)
+            Expanded(child: Center(child: _button()))
+          else
+            Padding(
+              padding: const EdgeInsets.only(top: 40),
+              child: _button(),
             ),
-          ),
           if (authButton != null) authButton!,
           _Disclaimer(copyrightPeriod: copyrightPeriod),
         ],
@@ -100,16 +105,20 @@ class _ButtonWrapper extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: style != null ? defaultStyle.merge(style) : defaultStyle,
-      child: icon != null
-          ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                icon!,
-                const SizedBox(width: 8),
-                _ButtonText(text: text),
-              ],
-            )
-          : _ButtonText(text: text),
+      // Scales the content down instead of overflowing in narrow windows
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: icon != null
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  icon!,
+                  const SizedBox(width: 8),
+                  _ButtonText(text: text),
+                ],
+              )
+            : _ButtonText(text: text),
+      ),
     );
   }
 }
@@ -149,7 +158,7 @@ class _Disclaimer extends StatelessWidget {
     final verticalPad =
         (MediaQuery.of(context).size.height * 0.025).clamp(8.0, 24.0);
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: verticalPad),
+      padding: EdgeInsets.symmetric(vertical: verticalPad, horizontal: 16),
       child: Text(
         '© Derechos Reservados $period Universidad de Colima',
         style: TextStyle(

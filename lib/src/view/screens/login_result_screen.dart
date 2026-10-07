@@ -28,16 +28,28 @@ class LoginResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SimpleScaffoldTemplate(
       actions: [
-        WayfLogoutButton(
-          onWayfResolve: (context) {
-            onLogout?.call();
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil('/home', (route) => false);
+        AdaptiveAppBarAction(
+          iosSymbol: 'rectangle.portrait.and.arrow.right',
+          icon: Icons.logout,
+          title: 'Salir',
+          tintColor: UdcColors.actionDanger,
+          onPressed: () {
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute<void>(
+                builder: (context) => WayfWebViewLogoutScreen(
+                  onWayfResolve: () {
+                    onLogout?.call();
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil('/home', (route) => false);
+                  },
+                  logoutUrl: logoutUrl,
+                  userAgent: userAgent,
+                ),
+              ),
+              (route) => false,
+            );
           },
-          logoutUrl: logoutUrl,
-          userAgent: userAgent,
         ),
-        const SizedBox(width: 8),
       ],
       title: 'Login correcto',
       body: Align(

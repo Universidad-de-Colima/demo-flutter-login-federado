@@ -14,7 +14,7 @@ import 'package:wayf_login_udc/src/models/models_library.dart';
 import 'package:wayf_login_udc/src/view/widgets/widgets_library.dart';
 import 'package:wayf_login_udc/src/widgets/templates/simple_scaffold_template.dart';
 import 'package:wayf_login_udc/src/widgets/templates/web_view_template.dart';
-import 'package:wayf_login_udc/src/widgets/way_logout_button.dart';
+import 'package:adaptive_platform_ui/adaptive_platform_ui.dart';
 // 📦 Package imports:
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';

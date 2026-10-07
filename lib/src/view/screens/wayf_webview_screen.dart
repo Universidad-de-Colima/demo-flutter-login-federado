@@ -32,7 +32,7 @@ class WayfWebViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WebViewTemplate(
-      title: 'Inicio de sesión',
+      title: 'Inicia sesión',
       initialUrl: loginUrl ?? UdcHttp.loginWebViewUrl,
       channelMessage: 'Login',
       onMessageReceived: (message) => _onMessageReceived(message, context),
@@ -54,7 +54,7 @@ class WayfWebViewScreen extends StatelessWidget {
       } else if (context.mounted) {
         Navigator.of(context).pop();
       }
-    } catch (e) {
+    } on Exception catch (e) {
       debugPrint('WayfWebViewScreen unexpected payload error: $e');
       if (onWayfError != null) {
         onWayfError!(e.toString());
